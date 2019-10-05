@@ -5,11 +5,19 @@
  */
 package vuph.util;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
@@ -33,5 +41,12 @@ public class XMLUtilities implements Serializable {
         XPath xpath = factory.newXPath();
         
         return xpath;
+    }
+    
+    public static void saveToXMLFile(DOMResult dom, String resultFileName) throws TransformerException, FileNotFoundException {
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer();
+        StreamResult sr = new StreamResult(new FileOutputStream(resultFileName));
+        transformer.transform(new DOMSource(dom.getNode()), sr);
     }
 }

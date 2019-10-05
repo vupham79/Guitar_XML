@@ -19,6 +19,8 @@ public class ProcessServlet extends HttpServlet {
     // Servlets
     private final String LOGIN_SERVLET = "LoginServlet";
     private final String SEARCH_SERVLET = "SearchServlet";
+    private final String LOGOUT_SERVLET = "LogoutServlet";
+    private final String CRAWL_SERVLET = "CrawlServlet";
     // Pages
     private final String INVALID_PAGE = "invalid.html";
     /**
@@ -34,13 +36,18 @@ public class ProcessServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
+        String url = "quiz.jsp";
         try {
             String action = request.getParameter("action");
             if (action.equals("Login")) {
                 url = LOGIN_SERVLET;
             } else if (action.equals("Search")) {
                 url = SEARCH_SERVLET;
+            } else if (action.equals("Log out")) {
+                url = LOGOUT_SERVLET;
+            } else if (action.equals("Crawl")) {
+                System.out.println("Process");
+                url = CRAWL_SERVLET;
             }
         } catch (Exception e) {
             log("ProcessServlet: " + e);

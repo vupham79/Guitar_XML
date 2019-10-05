@@ -6,14 +6,13 @@
 package vuph.servlet;
 
 import java.io.IOException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.w3c.dom.Document;
-import vuph.util.XMLUtilities;
+import vuph.dao.UserDAO;
+import vuph.dto.UserDTO;
 
 /**
  *
@@ -23,10 +22,10 @@ public class LoginServlet extends HttpServlet {
     // Servlets
 
     // Pages
-    private final String LOGIN_PAGE = "login.html";
+    private final String LOGIN_PAGE = "login.jsp";
     private final String HOME_PAGE = "index.jsp";
-    // Files
-    private final String XML_FILEPATH = "WEB-INF/guitars.xml";
+    private final String ADMIN_PAGE = "admin.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,19 +40,32 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = LOGIN_PAGE;
         try {
-            HttpSession session = request.getSession();
-            String real_path = getServletContext().getRealPath("/");
-            String file_path = real_path + XML_FILEPATH;
-            
-            Document doc = XMLUtilities.parseFileToDoc(file_path);
-            
-            // Add attributes to Session
-            session.setAttribute("DOC", doc);
-            session.setAttribute("USERNAME", "Vu Pham");
-            url = HOME_PAGE;
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
+            // Check login
+            UserDAO dao = new UserDAO();
+            UserDTO dto = dao.checkLogin(username, password);
+            if (dto != null) {
+                HttpSession session = request.getSession();
+//            String real_path = getServletContext().getRealPath("/");
+//            String file_path = real_path + XML_FILEPATH;
+
+//            Document doc = XMLUtilities.parseFileToDoc(file_path);
+                // Add attributes to Session
+//            session.setAttribute("DOC", doc);
+                if (dto.isIsAdmin()) {
+                    url = ADMIN_PAGE;
+                } else {
+                    url = HOME_PAGE;
+                }
+                session.setAttribute("USER", dto);
+            } else {
+                request.setAttribute("error", "Username or Password not right!");
+            }
         } catch (Exception e) {
             log("LoginServlet: " + e);
         } finally {
+            System.out.println("DONE");
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

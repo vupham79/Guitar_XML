@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<categories xmlns="http://vuph.vn/schema/categories"
+            link="https://saigonmusical.com.vn"
+            host="https://saigonmusical.com.vn"         
+            schemaCategory="http://vuph.vn/schema/category"
+            schemaInstrument="http://vuph.vn/schema/instrument">
+</categories>

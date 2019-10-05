@@ -1,0 +1,18 @@
+
+        <c:if test="${empty sessionScope.USERNAME}">
+            <c:redirect url="login.jsp"/>
+        </c:if>
+        <c:if test="${not sessionScope.ADMIN}">
+            <c:redirect url="index.jsp"/>
+        </c:if>
+        <div class="container-fluid admin-container">
+            <div class="forms-wrapper">
+                <h1 class="alert alert-light">Welcome ${sessionScope.FULLNAME}</h1>
+                <form action="ProcessServlet" class="form-control-lg">
+                    <input type="submit" name="action" value="Crawl" class="btn btn-outline-light btn-block"/>
+                </form>
+                <form action="ProcessServlet" class="form-control-lg">
+                    <input type="submit" name="action" value="Log out" class="btn btn-danger btn-block"/>
+                </form>
+            </div>
+        </div>

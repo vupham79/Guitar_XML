@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://vuph.vn/schema/categories"
+           xmlns="http://vuph.vn/schema/categories"
+           xmlns:c="http://vuph.vn/schema/category"
+           elementFormDefault="qualified">
+    <xs:import namespace="http://vuph.vn/schema/category" schemaLocation="category.xsd"/>
+    <xs:element name="categories">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="c:category" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

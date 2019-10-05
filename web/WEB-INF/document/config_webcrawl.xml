@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<categories xmlns="http://vuph.vn/schema/categories"                  
+            link_saigonmusical_guitar="https://saigonmusical.com.vn/danh-muc/dan-guitar/page/1"
+            link_saigonmusical_sao="https://saigonmusical.com.vn/danh-muc/ken-sao/ken-sao-sao-tieu/page/1"
+            link_saigonmusical_organ="https://saigonmusical.com.vn/danh-muc/dan-organ/page/1"
+            link_saigonmusical_piano="https://saigonmusical.com.vn/danh-muc/dan-piano/page/1"
+            link_saigonmusical_drum="https://saigonmusical.com.vn/danh-muc/trong-bo-go/page/3/"
+            link_nhaccudongnai_guitar="http://nhaccudongnai.com/danh-muc/dan-guitar/"
+            link_nhaccudongnai_sao="http://nhaccudongnai.com/danh-muc/sao-truc/"
+            link_nhaccudongnai_cajon="http://nhaccudongnai.com/danh-muc/trong-cajon"
+            link_loanphuongthao_organ="https://loanphuongthao.com.vn/collections/mua-ban-dan-organ-casio-roland-gia-re?page="
+            link_loanphuongthao_piano="https://loanphuongthao.com.vn/collections/mua-ban-dan-piano-o-tphcm?page="
+            link_loanphuongthao_guitar="https://loanphuongthao.com.vn/collections/mua-ban-dan-guitar-fender-taylor-jackson?page="
+            link_loanphuongthao_drum="https://loanphuongthao.com.vn/collections/drum"
+            link_loanphuongthao_sao="https://loanphuongthao.com.vn/collections/sao"
+            link_loanphuongthao_harmonica="https://loanphuongthao.com.vn/collections/harmonica"
+            schemaCategory="http://vuph.vn/schema/category"
+            schemaInstrument="http://vuph.vn/schema/instrument">
+</categories>

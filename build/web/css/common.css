@@ -1,0 +1,89 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 3, 2019, 9:00:48 PM
+    Author     : VuPH
+*/
+html {
+    scroll-behavior: smooth;
+}
+
+.admin-container {
+    background-image: url(../img/admin.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column
+}
+
+.login-container {
+    background-image: url(../img/login.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+}
+
+.forms-wrapper {
+    background-color: rgba(84,84,84, 0.9);
+    padding: 20px;
+}
+
+.question-container {
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.question1 {
+    background-image: url(../img/instrument1.jpg);
+    background-size: cover;
+}
+
+.question2 {
+    background-image: url(../img/instrument2.jpg);
+    background-size: cover;
+}
+
+.question3 {
+    background-image: url(../img/instrument3.jpg);
+    background-size: cover;
+}
+
+.question4 {
+    background-image: url(../img/instrument4.jpg);
+    background-size: cover;
+}
+
+.result {
+    background-image: url(../img/result.jpg);
+    background-size: cover;
+}
+
+.answer {
+    color: #fff;
+    background-color: #28a745;
+    border: 3px solid lightgreen;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.noDisplay {
+    display: none !important;
+}
