@@ -33,9 +33,10 @@ public class UltimateURIResolver implements URIResolver {
         StreamSource ss = null;
         System.out.println(href);
         if (href != null
-                && (href.indexOf(Constant.LOAN_PHUONG_THAO) == 0
+                && (href.indexOf(Constant.DUC_THUONG) == 0
                 || href.indexOf(Constant.NHAC_CU_DONG_NAI) == 0
-                || href.indexOf(Constant.SAI_GON_MUSICAL) == 0)) {
+                || href.indexOf(Constant.SAI_GON_MUSICAL) == 0
+                || href.indexOf(Constant.HARMONICASHOP) == 0)) {
             try {
                 url = new URL(href);
                 connection = url.openConnection();
@@ -47,7 +48,7 @@ public class UltimateURIResolver implements URIResolver {
                 ss = preProcessInputStream(is);
                 return ss;
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("UltimateURIResolver-resolve: " + e);
             }
         }
         return null;
@@ -67,7 +68,8 @@ public class UltimateURIResolver implements URIResolver {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-        } catch (IOException ex) {
+        } catch (IOException e) {
+            System.out.println("UltimateURIResolver-getString: " + e);
         }
         return stringBuilder.toString();
     }

@@ -22,7 +22,7 @@ html {
 }
 
 .login-container {
-    background-image: url(../img/login.jpg);
+    background-image: url(../img/background.jpg);
     background-size: cover;
     min-height: 100vh;
     display: flex;

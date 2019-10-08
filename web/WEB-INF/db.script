@@ -61,3 +61,37 @@ CREATE TABLE tblUser (
 	fullname nvarchar(50),
 )
 
+// ver 3
+USE Instruments
+DROP TABLE tblCategory
+DROP TABLE tblInstrument
+DROP TABLE tblStore
+DROP TABLE tblUser
+
+CREATE TABLE tblCategory (
+    id int not null identity(1,1) PRIMARY KEY,
+    name nvarchar(20) not null,
+)
+
+CREATE TABLE tblStore (
+    id int not null identity(1,1) PRIMARY KEY,
+    name nvarchar(50) not null,
+    logo nvarchar(100)
+)
+
+CREATE TABLE tblInstrument (
+	id int not null identity(1,1) PRIMARY KEY,
+	name nvarchar(50) not null,
+	price float not null,
+	url nvarchar(100) not null,
+	imageUrl nvarchar(100),
+    cateId int FOREIGN KEY REFERENCES tblCategory(id),
+	storeId int FOREIGN KEY REFERENCES tblStore(id)
+)
+
+CREATE TABLE tblUser (
+    username nvarchar(20) not null PRIMARY KEY,
+    password nvarchar(20) not null,
+    isAdmin bit not null,
+    fullname nvarchar(50),
+)

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://vuph.vn/schema/stores"
+           xmlns="http://vuph.vn/schema/stores"
+           xmlns:s="http://vuph.vn/schema/store"
+           elementFormDefault="qualified">
+<xs:import namespace="http://vuph.vn/schema/store" schemaLocation="store.xsd"/>
+    <xs:element name="stores">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="s:store" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

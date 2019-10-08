@@ -15,12 +15,9 @@ public class Constant {
     public static final String PATH_STYLESHEET = "WEB-INF/xsl/";
     public static final String PATH_XML = "WEB-INF/document/";
     public static final String PATH_XML_OUTPUT = "WEB-INF/classes/vuph/xmlOutput/";
-    public static final String REAL_PATH = "C:\\Users\\VuPH\\Documents\\NetBeansProjects\\Guitar_XML\\build\\web\\";
 
     // CONFIG
-    public static final String CONFIG_WEBCRAWL = "WEB-INF/document/config_webcrawl.xml";
-    public static final String CONFIG_XML_NHAC_CU_DONG_NAI = "WEB-INF/document/config_nhaccudongnai.xml";
-    public static final String CONFIG_XML_LOAN_PHUONG_THAO = "WEB-INF/document/config_loanphuongthao.xml";
+    public static final String CONFIG_WEBCRAWL = "WEB-INF/document/config.xml";
     
     // XSD
     public static final String XSD_CATEGORIES = "WEB-INF/schema/categories.xsd";
@@ -28,14 +25,16 @@ public class Constant {
     public static final String XSD_INSTRUMENT = "WEB-INF/schema/instrument.xsd";
     
     // XSL
-    public static final String XSL_LOAN_PHUONG_THAO = "WEB-INF/xsl/loanphuongthao.xsl";
+    public static final String XSL_DUC_THUONG = "WEB-INF/xsl/ducthuong.xsl";
     public static final String XSL_NHAC_CU_DONG_NAI = "WEB-INF/xsl/nhaccudongnai.xsl";
     public static final String XSL_SAI_GON_MUSICAL = "WEB-INF/xsl/saigonmusical.xsl";
+    public static final String XSL_HARMONICASHOP = "WEB-INF/xsl/harmonicashop.xsl";
     
     // URL
-    public static final String LOAN_PHUONG_THAO = "https://loanphuongthao.com.vn";
+    public static final String DUC_THUONG = "https://ducthuong.com.vn/";
     public static final String NHAC_CU_DONG_NAI = "http://nhaccudongnai.com";
     public static final String SAI_GON_MUSICAL = "https://saigonmusical.com.vn";
+    public static final String HARMONICASHOP = "https://harmonicashop.net";
     
     // URL
     public static final String OUTPUT_LOAN_PHUONG_THAO = "ouput_loan_phuong_thao.xml";

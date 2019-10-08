@@ -12,13 +12,17 @@ import com.sun.tools.xjc.api.SchemaCompiler;
 import com.sun.tools.xjc.api.XJC;
 import java.io.File;
 import java.io.Serializable;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.util.JAXBSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import vuph.generateObject.Categories;
-import vuph.generateObject.Category;
-import vuph.generateObject.Instrument;
 
 /**
  *
@@ -76,5 +80,19 @@ public class JAXBUtil implements Serializable {
             System.out.println("Unmarshall: " + e);
         }
         return categories;
+    }
+
+    public static <T> void marshall(T obj, String xmlFilePath) {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(obj.getClass());
+            JAXBSource source = new JAXBSource(jc, obj);
+
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = sf.newSchema(new File("customer.xsd"));
+
+            Validator validator = schema.newValidator();
+            validator.validate(source);
+        } catch (Exception e) {
+        }
     }
 }

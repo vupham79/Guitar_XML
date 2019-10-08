@@ -14,6 +14,14 @@
         <%@include file="header.jsp" %>
     </head>
     <body>
+        <c:if test="${sessionScope.USER != null}">
+            <c:if test="${sessionScope.USER.isIsAdmin()}">
+                <c:redirect url="admin.jsp"/>
+            </c:if>
+        </c:if>
+        <c:if test="${sessionScope.USER == null}">
+            <c:redirect url="login.jsp"/>
+        </c:if>
         <div class="container-fluid question1" id="question1">
             <div class="question-container">
                 <div class="row">
