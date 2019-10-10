@@ -6,13 +6,19 @@
 package vuph.servlet;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.stream.StreamResult;
+import vuph.dao.CategoriesDAO;
 import vuph.dao.UserDAO;
 import vuph.dto.UserDTO;
+import vuph.generateObject.Categories;
+import vuph.util.JAXBUtil;
 
 /**
  *
@@ -47,16 +53,13 @@ public class LoginServlet extends HttpServlet {
             UserDTO dto = dao.checkLogin(username, password);
             if (dto != null) {
                 HttpSession session = request.getSession();
-//            String real_path = getServletContext().getRealPath("/");
-//            String file_path = real_path + XML_FILEPATH;
-
-//            Document doc = XMLUtilities.parseFileToDoc(file_path);
-                // Add attributes to Session
-//            session.setAttribute("DOC", doc);
                 if (dto.isIsAdmin()) {
                     url = ADMIN_PAGE;
                 } else {
                     url = HOME_PAGE;
+                    Categories cates = CategoriesDAO.getAllCategories();
+                    StreamResult rs = JAXBUtil.marshall(cates);
+                    request.setAttribute("XML", rs.getOutputStream().toString());
                 }
                 session.setAttribute("USER", dto);
             } else {

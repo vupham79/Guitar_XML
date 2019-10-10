@@ -6,6 +6,8 @@
 package vuph.dao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,47 +23,70 @@ import vuph.util.DBUtil;
  */
 public class CategoriesDAO implements Serializable {
 
-    public static void saveCrawlDataToDB(Categories categories) throws SQLException {
+    public static Categories getAllCategories() throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String sql = "";
-        boolean flag = true;
+        Categories categories = null;
+        Category category = null;
+        Instrument instrument = null;
         try {
             con = DBUtil.getConnection();
-            // Transaction
-            // Get Category ID
-
-            String name;
-            for (Category category : categories.getCategory()) {
-                sql = "SELECT id FROM tblCategory WHERE name=?";
-                stm = con.prepareStatement(sql);
-                name = category.getCategoryName();
-                stm.setString(1, name);
-                rs = stm.executeQuery();
-                if (rs.next()) {
-                    for (Instrument instrument : category.getInstrument()) {
-                        // Insert to DB
-                        sql = "INSERT INTO tblInstrument(name,price,url,categoryId,storeName,storeLogo) values(?,?,?,?,?,?)";
-                        stm = con.prepareStatement(sql);
-                        stm.setString(1, instrument.getName());
-                        stm.setBigDecimal(2, instrument.getPrice());
-//                        stm.setString(3, instrument.getUrl());
-                        flag = stm.executeUpdate() > 0;
+            sql = "select tblInstrument.id, tblInstrument.name, price, url, imageUrl, "
+                    + "tblStore.name, tblStore.logo, viewNo, tblCategory.name, "
+                    + "tblCategory.categoryId "
+                    + "from tblInstrument "
+                    + "inner join tblCategory "
+                    + "on tblCategory.categoryId = tblInstrument.categoryId "
+                    + "inner join tblStore "
+                    + "on tblStore.storeId = tblInstrument.storeId "
+                    + "ORDER BY tblInstrument.categoryId";
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            int insId;
+            String insName;
+            float insPrice;
+            String insUrl;
+            String insImg;
+            String storeName;
+            String storeLogo;
+            int viewNo;
+            String cateName;
+            int cateId;
+            categories = new Categories();
+            while (rs.next()) {
+                insId = rs.getInt(1);
+                insName = rs.getString(2);
+                insPrice = rs.getFloat(3);
+                insUrl = rs.getString(4);
+                insImg = rs.getString(5);
+                storeName = rs.getString(6);
+                storeLogo = rs.getString(7);
+                viewNo = rs.getInt(8);
+                cateName = rs.getString(9);
+                cateId = rs.getInt(10);
+                instrument = new Instrument(insName, BigDecimal.valueOf(insPrice), insImg, insUrl, BigInteger.valueOf(insId), BigInteger.valueOf(viewNo), storeLogo, storeName);
+                if (category != null) {
+                    if (!category.getCategoryName().equals(cateName)) {
+                        categories.getCategory().add(category);
+                        category = new Category(cateName, BigInteger.valueOf(cateId));
                     }
+                } else {
+                    category = new Category(cateName, BigInteger.valueOf(cateId));
                 }
+                category.getInstrument().add(instrument);
             }
-//            [name]
-//      ,[price]
-//      ,[url]
-//      ,[categoryId]
-//      ,[storeName]
-//      ,[storeLogo
+            return categories;
         } catch (Exception e) {
-            con.rollback();
-            System.out.println("saveCrawlDataToDB: " + e);
+            System.out.println("getAllCategories: " + e);
+            return null;
         } finally {
-            con.close();
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.out.println("Connection: " + e);
+            }
         }
     }
 }

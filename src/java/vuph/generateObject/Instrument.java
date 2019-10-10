@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
- *       &lt;attribute name="click" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
+ *       &lt;attribute name="viewNo" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
+ *       &lt;attribute name="storeLogo" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="storeName" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -65,9 +67,27 @@ public class Instrument {
     @XmlAttribute(name = "id")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger id;
-    @XmlAttribute(name = "click")
+    @XmlAttribute(name = "viewNo")
     @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger click;
+    protected BigInteger viewNo;
+    @XmlAttribute(name = "storeLogo")
+    protected String storeLogo;
+    @XmlAttribute(name = "storeName")
+    protected String storeName;
+
+    public Instrument(String name, BigDecimal price, String imageUrl, String url, BigInteger id, BigInteger viewNo, String storeLogo, String storeName) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.url = url;
+        this.id = id;
+        this.viewNo = viewNo;
+        this.storeLogo = storeLogo;
+        this.storeName = storeName;
+    }
+
+    public Instrument() {
+    }
 
     /**
      * Gets the value of the name property.
@@ -190,27 +210,75 @@ public class Instrument {
     }
 
     /**
-     * Gets the value of the click property.
+     * Gets the value of the viewNo property.
      * 
      * @return
      *     possible object is
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getClick() {
-        return click;
+    public BigInteger getViewNo() {
+        return viewNo;
     }
 
     /**
-     * Sets the value of the click property.
+     * Sets the value of the viewNo property.
      * 
      * @param value
      *     allowed object is
      *     {@link BigInteger }
      *     
      */
-    public void setClick(BigInteger value) {
-        this.click = value;
+    public void setViewNo(BigInteger value) {
+        this.viewNo = value;
+    }
+
+    /**
+     * Gets the value of the storeLogo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStoreLogo() {
+        return storeLogo;
+    }
+
+    /**
+     * Sets the value of the storeLogo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStoreLogo(String value) {
+        this.storeLogo = value;
+    }
+
+    /**
+     * Gets the value of the storeName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStoreName() {
+        return storeName;
+    }
+
+    /**
+     * Sets the value of the storeName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStoreName(String value) {
+        this.storeName = value;
     }
 
 }

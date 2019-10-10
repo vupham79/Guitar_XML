@@ -13,58 +13,83 @@
     <head>
         <title>Nhạc Cụ Của Tui</title>
         <%@include file="header.jsp"%>
+        <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid bg-warning">
             <c:if test="${sessionScope.USER.isIsAdmin()}">
                 <c:redirect url="admin.jsp"/>
             </c:if>
-            <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-                <a class="navbar-brand" href="">
-                    <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt="">
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Piano</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Guitar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Sáo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Trống</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Organ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Harmonica</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Trống</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
-                    </form>
-                    <form action="ProcessServlet" class="form-inline">
-                        <input class="btn btn-outline-dark mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                    </form>
-                    <c:if var="isLogin" test="${empty sessionScope.USER}">
-                        <form action="ProcessServlet" class="form-inline">
-                            <input name="action" value="Log In" type="submit" class="btn btn-outline-info"/>
-                        </form>
-                    </c:if>
-                    <c:if test="${!isLogin}">
-                        <form action="ProcessServlet" class="form-inline">
-                            <input name="action" value="Log out" type="submit" class="btn text-danger"/>
-                        </form>
-                    </c:if>
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-expand-md navbar-light fullwidth">
+                        <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+                            <a class="navbar-brand" href="">
+                                <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 hidden-sm hidden-xs">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                                </form>
+                                <form action="ProcessServlet" class="form-inline">
+                                    <input class="btn btn-outline-dark mr-sm-2" name="action" type="submit" value="Làm Quiz">
+                                </form>
+                                <c:if var="isLogin" test="${empty sessionScope.USER}">
+                                    <form action="ProcessServlet" class="form-inline">
+                                        <input name="action" value="Log In" type="submit" class="btn btn-outline-info"/>
+                                    </form>
+                                </c:if>
+                                <c:if test="${!isLogin}">
+                                    <form action="ProcessServlet" class="form-inline">
+                                        <input name="action" value="Log out" type="submit" class="btn text-danger"/>
+                                    </form>
+                                </c:if>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
-            </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="cont">
+                    <div class="cus-col-left">
+                        <div class="row">
+                            <div class="col-lg-3 col-cat">
+                                <div class="column_right">
+                                    <div class="box">
+                                        <div class="box-heading">DANH MỤC</div>
+                                        <div class="box-content">
+                                            <ul class="box-category">
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> ĐÀN ORGAN </a>
+                                                </li>
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> ĐÀN PIANO </a>
+                                                </li>
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> ĐÀN GUITAR </a>
+                                                </li>
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> TRỐNG </a>
+                                                </li>
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> SÁO </a>
+                                                </li>
+                                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> HARMONICA </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <c:if test="${not empty requestScope.XML}">
+                                    <c:import var="xslt" url="WEB-INF/xsl/instrument_jsp.xsl" charEncoding="utf-8"/>
+                                    <x:transform doc="${requestScope.XML}" xslt="${xslt}"/>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

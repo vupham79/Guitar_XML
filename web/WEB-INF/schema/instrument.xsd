@@ -19,7 +19,9 @@
                 <xs:element name="url" type="xs:anyURI"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:positiveInteger"/>
-            <xs:attribute name="click" type="xs:positiveInteger"/>
+            <xs:attribute name="viewNo" type="xs:positiveInteger"/>
+            <xs:attribute name="storeLogo" type="xs:string"/>
+            <xs:attribute name="storeName" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

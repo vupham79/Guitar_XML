@@ -10,16 +10,14 @@ import com.sun.tools.xjc.api.ErrorListener;
 import com.sun.tools.xjc.api.S2JJAXBModel;
 import com.sun.tools.xjc.api.SchemaCompiler;
 import com.sun.tools.xjc.api.XJC;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.Serializable;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.util.JAXBSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
+import javax.xml.transform.stream.StreamResult;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import vuph.generateObject.Categories;
@@ -82,17 +80,18 @@ public class JAXBUtil implements Serializable {
         return categories;
     }
 
-    public static <T> void marshall(T obj, String xmlFilePath) {
+    public static <T> StreamResult marshall(T obj) {
         try {
+            StreamResult rs = new StreamResult(new ByteArrayOutputStream());
             JAXBContext jc = JAXBContext.newInstance(obj.getClass());
-            JAXBSource source = new JAXBSource(jc, obj);
-
-            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = sf.newSchema(new File("customer.xsd"));
-
-            Validator validator = schema.newValidator();
-            validator.validate(source);
-        } catch (Exception e) {
+            Marshaller mar = jc.createMarshaller();
+            mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            mar.setProperty(Marshaller.JAXB_ENCODING, "us-ascii");
+            mar.marshal(obj, rs);
+            return rs;
+        } catch (JAXBException e) {
+            System.out.println("marshall: " + e);
+            return null;
         }
     }
 }

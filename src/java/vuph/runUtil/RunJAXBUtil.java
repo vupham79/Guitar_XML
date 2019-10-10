@@ -35,9 +35,6 @@ public class RunJAXBUtil {
         // Store -> Java object
         filepath = "web/WEB-INF/schema/store.xsd";
         JAXBUtil.convertXSDToJava(filepath);
-        // Stores -> Java object
-        filepath = "web/WEB-INF/schema/stores.xsd";
-        JAXBUtil.convertXSDToJava(filepath);
     }
     
     public static void unmarshall() {

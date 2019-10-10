@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -36,8 +35,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "categories", namespace = "http://vuph.vn/schema/categories")
 public class Categories {
 
-    @XmlElement(namespace = "http://vuph.vn/schema/category")
     protected List<Category> category;
+
+    public Categories() {
+    }
+
+    public Categories(List<Category> category) {
+        this.category = category;
+    }
 
     /**
      * Gets the value of the category property.

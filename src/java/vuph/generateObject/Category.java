@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "instrument"
 })
-@XmlRootElement(name = "category", namespace = "http://vuph.vn/schema/category")
+@XmlRootElement(name = "category")
 public class Category {
 
     @XmlElement(namespace = "http://vuph.vn/schema/instrument")
@@ -46,6 +46,20 @@ public class Category {
     protected String categoryName;
     @XmlAttribute(name = "id")
     protected BigInteger id;
+
+    public Category() {
+    }
+
+    public Category(String categoryName, BigInteger id) {
+        this.categoryName = categoryName;
+        this.id = id;
+    }
+
+    public Category(List<Instrument> instrument, String categoryName, BigInteger id) {
+        this.instrument = instrument;
+        this.categoryName = categoryName;
+        this.id = id;
+    }
 
     /**
      * Gets the value of the instrument property.
