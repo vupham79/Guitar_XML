@@ -2,8 +2,10 @@
 package vuph.generateObject;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
@@ -20,7 +22,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="name">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -30,14 +31,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;/element>
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="imageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *         &lt;element name="type">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;minLength value="1"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
+ *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
+ *       &lt;attribute name="click" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -47,17 +44,14 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "name",
     "price",
     "imageUrl",
-    "type"
+    "url"
 })
 @XmlRootElement(name = "instrument", namespace = "http://vuph.vn/schema/instrument")
 public class Instrument {
 
-    @XmlElement(namespace = "http://vuph.vn/schema/instrument")
-    protected int id;
     @XmlElement(namespace = "http://vuph.vn/schema/instrument", required = true)
     protected String name;
     @XmlElement(namespace = "http://vuph.vn/schema/instrument", required = true, defaultValue = "0")
@@ -66,23 +60,14 @@ public class Instrument {
     @XmlSchemaType(name = "anyURI")
     protected String imageUrl;
     @XmlElement(namespace = "http://vuph.vn/schema/instrument", required = true)
-    protected String type;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
+    @XmlSchemaType(name = "anyURI")
+    protected String url;
+    @XmlAttribute(name = "id")
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger id;
+    @XmlAttribute(name = "click")
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger click;
 
     /**
      * Gets the value of the name property.
@@ -157,27 +142,75 @@ public class Instrument {
     }
 
     /**
-     * Gets the value of the type property.
+     * Gets the value of the url property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getType() {
-        return type;
+    public String getUrl() {
+        return url;
     }
 
     /**
-     * Sets the value of the type property.
+     * Sets the value of the url property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setType(String value) {
-        this.type = value;
+    public void setUrl(String value) {
+        this.url = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setId(BigInteger value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the click property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getClick() {
+        return click;
+    }
+
+    /**
+     * Sets the value of the click property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setClick(BigInteger value) {
+        this.click = value;
     }
 
 }

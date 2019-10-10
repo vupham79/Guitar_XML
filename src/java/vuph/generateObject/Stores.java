@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://vuph.vn/schema/category}category" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://vuph.vn/schema/store}store" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,41 +31,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "category"
+    "store"
 })
-@XmlRootElement(name = "categories", namespace = "http://vuph.vn/schema/categories")
-public class Categories {
+@XmlRootElement(name = "stores")
+public class Stores {
 
-    @XmlElement(namespace = "http://vuph.vn/schema/category")
-    protected List<Category> category;
+    @XmlElement(namespace = "http://vuph.vn/schema/store")
+    protected List<Store> store;
 
     /**
-     * Gets the value of the category property.
+     * Gets the value of the store property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the category property.
+     * This is why there is not a <CODE>set</CODE> method for the store property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getCategory().add(newItem);
+     *    getStore().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Category }
+     * {@link Store }
      * 
      * 
      */
-    public List<Category> getCategory() {
-        if (category == null) {
-            category = new ArrayList<Category>();
+    public List<Store> getStore() {
+        if (store == null) {
+            store = new ArrayList<Store>();
         }
-        return this.category;
+        return this.store;
     }
 
 }

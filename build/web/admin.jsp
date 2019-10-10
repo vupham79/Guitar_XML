@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Nhạc Cụ Thích Hợp | Admin</title>
+        <title>Nhạc Cụ Của Tui | Admin</title>
         <%@include file="header.jsp" %>
     </head>
     <body>

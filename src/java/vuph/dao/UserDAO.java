@@ -24,7 +24,8 @@ public class UserDAO {
         UserDTO dto = null; 
         try {
             con = DBUtil.getConnection(); 
-            String sql = "select fullname, isAdmin from tblUser where username=? and password=?";
+            String sql = "use Instruments "
+                    + "select fullname, isAdmin from tblUser where username=? and password=?";
             stm = con.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);

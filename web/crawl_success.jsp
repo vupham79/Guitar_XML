@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nhạc Cụ Thích Hợp</title>
+        <title>Nhạc Cụ Của Tui | Admin</title>
         <%@include file="header.jsp"%>
     </head>
     <body>

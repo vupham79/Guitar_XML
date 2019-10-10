@@ -1,6 +1,7 @@
 
 package vuph.generateObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://vuph.vn/schema/instrument}instrument" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="categoryName" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -35,13 +37,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "instrument"
 })
-@XmlRootElement(name = "category")
+@XmlRootElement(name = "category", namespace = "http://vuph.vn/schema/category")
 public class Category {
 
     @XmlElement(namespace = "http://vuph.vn/schema/instrument")
     protected List<Instrument> instrument;
     @XmlAttribute(name = "categoryName")
     protected String categoryName;
+    @XmlAttribute(name = "id")
+    protected BigInteger id;
 
     /**
      * Gets the value of the instrument property.
@@ -94,6 +98,30 @@ public class Category {
      */
     public void setCategoryName(String value) {
         this.categoryName = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setId(BigInteger value) {
+        this.id = value;
     }
 
 }

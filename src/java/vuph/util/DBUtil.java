@@ -18,7 +18,7 @@ public class DBUtil {
         Connection con = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Instruments", "sa", "123456");
+            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Instruments", "sa", "123");
         } catch (Exception e) {
             e.printStackTrace();
         }

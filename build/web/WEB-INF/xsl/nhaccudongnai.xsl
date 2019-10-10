@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-                xmlns:xh="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://vuph.vn/schema/store"
                 xmlns="http://vuph.vn/schema/store"
                 version="1.0">
-    <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output method="xml" omit-xml-declaration="yes" indent="yes" encoding="UTF-8"/>
     <xsl:template match="s:store" xmlns="http://vuph.vn/schema/store">
         <xsl:element name="store">
             <xsl:element name="name">

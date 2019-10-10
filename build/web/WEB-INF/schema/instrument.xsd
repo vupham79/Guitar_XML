@@ -6,11 +6,6 @@
            elementFormDefault="qualified">
     <xs:element name="instrument">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:positiveInteger"/>
-            <xs:attribute name="cateId" type="xs:positiveInteger"/>
-            <xs:attribute name="storeId" type="xs:positiveInteger"/>
-            <xs:attribute name="isDeleted" type="xs:boolean"/>
-            <xs:attribute name="click" type="xs:positiveInteger"/>
             <xs:sequence>
                 <xs:element name="name">
                     <xs:simpleType>
@@ -23,6 +18,8 @@
                 <xs:element name="imageUrl" type="xs:anyURI"/>
                 <xs:element name="url" type="xs:anyURI"/>
             </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+            <xs:attribute name="click" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

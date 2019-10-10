@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-                xmlns:xh="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://vuph.vn/schema/store"
                 xmlns="http://vuph.vn/schema/store"
                 version="1.0">
-    <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output method="xml" omit-xml-declaration="yes" indent="yes" encoding="UTF-8"/>
     <xsl:template match="s:store" xmlns="http://vuph.vn/schema/store">
         <xsl:element name="store">
             <xsl:element name="name">
@@ -38,8 +37,8 @@
                 </xsl:call-template>
             </xsl:if>
         </xsl:for-each>
-        <xsl:if test="($href//span[@class='paging']//a[@class='link_dang_chon']/following-sibling::*)[1]">
-            <xsl:variable name="link1" select="($href//span[@class='paging']//a[@class='link_dang_chon']/following-sibling::*)[1]//a/text()"/>
+        <xsl:if test="($href//a[@class='link_dang_chon']/following-sibling::*)[1]">
+            <xsl:variable name="link1" select="($href//a[@class='link_dang_chon']/following-sibling::*)[1]/@href"/>
             <xsl:variable name="link" select="concat('https://harmonicashop.net/',$link1)"/>
             <xsl:call-template name="instrumentList">
                 <xsl:with-param name="href" select="document($link)"/>

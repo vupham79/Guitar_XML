@@ -23,6 +23,8 @@ public class Constant {
     public static final String XSD_CATEGORIES = "WEB-INF/schema/categories.xsd";
     public static final String XSD_CATEGORY = "WEB-INF/schema/category.xsd";
     public static final String XSD_INSTRUMENT = "WEB-INF/schema/instrument.xsd";
+    public static final String XSD_STORE = "WEB-INF/schema/store.xsd";
+    public static final String XSD_STORES = "WEB-INF/schema/stores.xsd";
     
     // XSL
     public static final String XSL_DUC_THUONG = "WEB-INF/xsl/ducthuong.xsl";

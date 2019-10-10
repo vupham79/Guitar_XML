@@ -31,7 +31,15 @@ and open the template in the editor.
                     <name>Test</name>
                     <p class="price3">
                         20000 đ                 
-                    </p>
+                    </p> 
+                    <span class="paging">
+                        <a rel="next" class="link_dang_chon" href="ken-diatonic-d23.html">1</a>	 
+                        <a href="ken-diatonic-d23.html?p=2">2</a>	 
+                        <a href="ken-diatonic-d23.html?p=3">3</a>	     
+                        <a class="bieu_tuong_phan_trang" rel="next" href="ken-diatonic-d23.html?p=2">›</a>  
+                        <a class="bieu_tuong_phan_trang" href="ken-diatonic-d23.html?p=3">»</a> 
+                        <span class="tongsotrang">( 3 )</span> 
+                    </span>
                 </instrument>
             </category>
         </categories>

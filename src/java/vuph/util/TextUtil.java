@@ -14,15 +14,13 @@ import vuph.xmlchecker.XMLSyntaxChecker;
  * @author VuPH
  */
 public class TextUtil {
-    public static String refineHtml(String src){
+    public static String wellformHTML(String src){
         src = getBody(src);
-        src = removeMiscellaneousTags(src);
+//        src = removeMiscellaneousTags(src);
         
         XMLSyntaxChecker checker = new XMLSyntaxChecker();
         src = checker.check(src);
         
-        // crop one more times 
-        src = getBody(src);
         return src;
     }
     public static String getBody(String src){

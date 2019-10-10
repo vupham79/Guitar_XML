@@ -41,8 +41,6 @@ public class UltimateURIResolver implements URIResolver {
                 url = new URL(href);
                 connection = url.openConnection();
                 connection.addRequestProperty("User-Agent", Constant.USER_AGENT);
-                connection.setReadTimeout(20 * 1000);
-                connection.setConnectTimeout(20 * 1000);
                 System.out.println("Connect: " + href);
                 is = connection.getInputStream();
                 ss = preProcessInputStream(is);
@@ -56,7 +54,7 @@ public class UltimateURIResolver implements URIResolver {
 
     private StreamSource preProcessInputStream(InputStream httpResult) throws IOException {
         String textContent = getString(httpResult);
-        textContent = TextUtil.refineHtml(textContent);
+        textContent = TextUtil.wellformHTML(textContent);
         InputStream htmlResult = new ByteArrayInputStream(textContent.getBytes("UTF-8"));
         return new StreamSource(htmlResult);
     }

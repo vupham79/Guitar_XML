@@ -65,7 +65,7 @@ public class JAXBUtil implements Serializable {
             code.build(new File(output));
             System.out.println("Finished Generating Object");
         } catch (Exception e) {
-            System.out.println("ConvertXMLToJava: " + e.getMessage());
+            System.out.println("ConvertXMLToJava: " + e);
         }
     }
 

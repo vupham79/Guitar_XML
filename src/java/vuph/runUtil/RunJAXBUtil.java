@@ -5,7 +5,6 @@
  */
 package vuph.runUtil;
 
-import vuph.constant.Constant;
 import vuph.util.JAXBUtil;
 
 /**
@@ -19,11 +18,11 @@ public class RunJAXBUtil {
      */
     public static void main(String[] args) {
         System.out.println("Start");
-        RunJAXBUtil.testUnmarshall();
+        RunJAXBUtil.convertXSDToJava();
         System.out.println("Finished");
     }
 
-    public void testConvertXSDToJava() {
+    public static void convertXSDToJava() {
         // Instrument XSD -> Java object
         String filepath = "web/WEB-INF/schema/instrument.xsd";
         JAXBUtil.convertXSDToJava(filepath);
@@ -33,9 +32,15 @@ public class RunJAXBUtil {
         // Categories -> Java object
         filepath = "web/WEB-INF/schema/categories.xsd";
         JAXBUtil.convertXSDToJava(filepath);
+        // Store -> Java object
+        filepath = "web/WEB-INF/schema/store.xsd";
+        JAXBUtil.convertXSDToJava(filepath);
+        // Stores -> Java object
+        filepath = "web/WEB-INF/schema/stores.xsd";
+        JAXBUtil.convertXSDToJava(filepath);
     }
     
-    public static void testUnmarshall() {
-        JAXBUtil.unmarshall(Constant.REAL_PATH + Constant.PATH_XML_OUTPUT + Constant.OUTPUT_LOAN_PHUONG_THAO);
+    public static void unmarshall() {
+//        JAXBUtil.unmarshall(Constant.REAL_PATH + Constant.PATH_XML_OUTPUT + Constant.OUTPUT_LOAN_PHUONG_THAO);
     }
 }

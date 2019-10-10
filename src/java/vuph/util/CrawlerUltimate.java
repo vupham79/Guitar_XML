@@ -7,11 +7,12 @@ package vuph.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -21,7 +22,7 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class CrawlerUltimate {
 
-    public static StreamResult crawl(String configPath, String xslPath) {
+    public static String crawl(String configPath, String xslPath) {
         try {
             // init files
             StreamSource xslCate = new StreamSource(xslPath);
@@ -35,13 +36,13 @@ public class CrawlerUltimate {
             factory.setURIResolver(resolver);
             Transformer transformer = factory.newTransformer(xslCate);
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "us-ascii");
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             // transform xml config by input xsl
             transformer.transform(new StreamSource(is), streamRs);
-            return streamRs;
-        } catch (Exception e) {
+            return streamRs.getOutputStream().toString();
+        } catch (FileNotFoundException | IllegalArgumentException | TransformerException e) {
             System.out.println("CrawlerUltimate-crawl: " + e);
         }
         return null;
