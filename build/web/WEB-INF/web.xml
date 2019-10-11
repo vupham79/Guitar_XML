@@ -20,6 +20,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>vuph.servlet.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QuizServlet</servlet-name>
+        <servlet-class>vuph.servlet.QuizServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizServlet</servlet-name>
+        <url-pattern>/QuizServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

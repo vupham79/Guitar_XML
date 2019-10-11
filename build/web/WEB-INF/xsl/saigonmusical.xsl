@@ -15,10 +15,21 @@
             <xsl:element name="categories" xmlns="http://vuph.vn/schema/categories">
                 <xsl:element name="category" xmlns="http://vuph.vn/schema/category">
                     <xsl:attribute name="categoryName">
-                        <xsl:value-of select="'Guitar'"/>
+                        <xsl:value-of select="'Classic Guitar'"/>
                     </xsl:attribute>
                     <xsl:call-template name="instrumentList">
-                        <xsl:with-param name="href" select="document(@link_saigonmusical_guitar)"/>
+                        <xsl:with-param name="href" select="document(@link_saigonmusical_classic_guitar)"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="instrumentList">
+                        <xsl:with-param name="href" select="document(@link_saigonmusical_acoustic_guitar)"/>
+                    </xsl:call-template>
+                </xsl:element>
+                <xsl:element name="category" xmlns="http://vuph.vn/schema/category">
+                    <xsl:attribute name="categoryName">
+                        <xsl:value-of select="'Electric Guitar'"/>
+                    </xsl:attribute>
+                    <xsl:call-template name="instrumentList">
+                        <xsl:with-param name="href" select="document(@link_saigonmusical_electric_guitar)"/>
                     </xsl:call-template>
                 </xsl:element>
                 <xsl:element name="category" xmlns="http://vuph.vn/schema/category">

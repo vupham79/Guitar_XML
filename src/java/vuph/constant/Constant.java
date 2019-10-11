@@ -48,4 +48,14 @@ public class Constant {
     
     // IMAGE URL 
     public static final String URL_IMAGE = "resource/image";
+    
+    // CATEGORY
+    public static final String CLASSIC_GUITAR = "Classic Guitar";
+    public static final String ELECTRIC_GUITAR = "Electric Guitar";
+    public static final String ORGAN = "Organ";
+    public static final String PIANO = "Piano";
+    public static final String FLUTE = "Flute";
+    public static final String DRUM = "Drum";
+    public static final String HARMONICA = "Harmonica";
+    public static final String CAJON = "Cajon";
 }

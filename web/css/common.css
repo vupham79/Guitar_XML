@@ -87,3 +87,7 @@ html {
 .noDisplay {
     display: none !important;
 }
+
+.primary {
+    background-color: #ffe000;
+}

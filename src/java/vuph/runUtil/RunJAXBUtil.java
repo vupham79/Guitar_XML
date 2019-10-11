@@ -24,17 +24,17 @@ public class RunJAXBUtil {
 
     public static void convertXSDToJava() {
         // Instrument XSD -> Java object
-        String filepath = "web/WEB-INF/schema/instrument.xsd";
-        JAXBUtil.convertXSDToJava(filepath);
+//        String filepath = "web/WEB-INF/schema/instrument.xsd";
+//        JAXBUtil.convertXSDToJava(filepath);
         // Category XSD -> Java object
-        filepath = "web/WEB-INF/schema/category.xsd";
+        String filepath = "web/WEB-INF/schema/category.xsd";
         JAXBUtil.convertXSDToJava(filepath);
-        // Categories -> Java object
-        filepath = "web/WEB-INF/schema/categories.xsd";
-        JAXBUtil.convertXSDToJava(filepath);
-        // Store -> Java object
-        filepath = "web/WEB-INF/schema/store.xsd";
-        JAXBUtil.convertXSDToJava(filepath);
+//        // Categories -> Java object
+//        filepath = "web/WEB-INF/schema/categories.xsd";
+//        JAXBUtil.convertXSDToJava(filepath);
+//        // Store -> Java object
+//        filepath = "web/WEB-INF/schema/store.xsd";
+//        JAXBUtil.convertXSDToJava(filepath);
     }
     
     public static void unmarshall() {

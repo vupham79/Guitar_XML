@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import vuph.generateObject.Categories;
 import vuph.generateObject.Category;
 import vuph.generateObject.Instrument;
@@ -23,16 +25,47 @@ import vuph.util.DBUtil;
  */
 public class CategoriesDAO implements Serializable {
 
-    public static Categories getAllCategories() throws SQLException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+
+    public int getCategoryIdByName(String name) {
+        String sql = "";
+        int id = -1;
+        try {
+            con = DBUtil.getConnection();
+            sql = "select categoryId from tblCategory where name = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, name);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("getCategoryIdByName: " + e);
+        } finally {
+            closeConnection();
+            return id;
+        }
+    }
+
+    public Categories getAllCategories() throws SQLException {
         String sql = "";
         Categories categories = null;
         Category category = null;
         Instrument instrument = null;
+        Map<Integer, Integer> counts = null;
         try {
             con = DBUtil.getConnection();
+            sql = "  select ROW_NUMBER() over(order by categoryId) , count(categoryId)"
+                    + "  from tblInstrument"
+                    + "  group by tblInstrument.categoryId";
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            counts = new HashMap<>();
+            while (rs.next()) {
+                counts.put(rs.getInt(1), rs.getInt(2));
+            }
             sql = "select tblInstrument.id, tblInstrument.name, price, url, imageUrl, "
                     + "tblStore.name, tblStore.logo, viewNo, tblCategory.name, "
                     + "tblCategory.categoryId "
@@ -55,6 +88,7 @@ public class CategoriesDAO implements Serializable {
             String cateName;
             int cateId;
             categories = new Categories();
+            int counter = 1;
             while (rs.next()) {
                 insId = rs.getInt(1);
                 insName = rs.getString(2);
@@ -69,24 +103,38 @@ public class CategoriesDAO implements Serializable {
                 instrument = new Instrument(insName, BigDecimal.valueOf(insPrice), insImg, insUrl, BigInteger.valueOf(insId), BigInteger.valueOf(viewNo), storeLogo, storeName);
                 if (category != null) {
                     if (!category.getCategoryName().equals(cateName)) {
+                        category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(counter));
+                        counter++;
                         categories.getCategory().add(category);
-                        category = new Category(cateName, BigInteger.valueOf(cateId));
                     }
                 } else {
-                    category = new Category(cateName, BigInteger.valueOf(cateId));
+                    category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(counter));
+                    counter++;
                 }
                 category.getInstrument().add(instrument);
             }
-            return categories;
         } catch (Exception e) {
             System.out.println("getAllCategories: " + e);
             return null;
         } finally {
-            try {
-                con.close();
-            } catch (Exception e) {
-                System.out.println("Connection: " + e);
+            closeConnection();
+            return categories;
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            if (rs != null) {
+                rs.close();
             }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("closeConnection: " + ex);
         }
     }
 }

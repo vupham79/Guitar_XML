@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://vuph.vn/schema/instrument}instrument" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="categoryName" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="count" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,21 +45,18 @@ public class Category {
     protected List<Instrument> instrument;
     @XmlAttribute(name = "categoryName")
     protected String categoryName;
+    @XmlAttribute(name = "count")
+    protected BigInteger count;
     @XmlAttribute(name = "id")
     protected BigInteger id;
 
+    public Category(String categoryName, BigInteger id, int count) {
+        this.categoryName = categoryName;
+        this.id = id;
+        this.count = BigInteger.valueOf(count);
+    }
+
     public Category() {
-    }
-
-    public Category(String categoryName, BigInteger id) {
-        this.categoryName = categoryName;
-        this.id = id;
-    }
-
-    public Category(List<Instrument> instrument, String categoryName, BigInteger id) {
-        this.instrument = instrument;
-        this.categoryName = categoryName;
-        this.id = id;
     }
 
     /**
@@ -112,6 +110,30 @@ public class Category {
      */
     public void setCategoryName(String value) {
         this.categoryName = value;
+    }
+
+    /**
+     * Gets the value of the count property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getCount() {
+        return count;
+    }
+
+    /**
+     * Sets the value of the count property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setCount(BigInteger value) {
+        this.count = value;
     }
 
     /**

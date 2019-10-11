@@ -30,22 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Store }
-     * 
-     */
-    public Store createStore() {
-        return new Store();
-    }
-
-    /**
-     * Create an instance of {@link Categories }
-     * 
-     */
-    public Categories createCategories() {
-        return new Categories();
-    }
-
-    /**
      * Create an instance of {@link Category }
      * 
      */

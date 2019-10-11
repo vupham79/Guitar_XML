@@ -9,32 +9,33 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ns1="http://vuph.vn/schema/instrument"
+                xmlns="http://vuph.vn/schema/instrument"
                 xmlns:ns2="http://vuph.vn/schema/category"
                 xmlns:ns3="http://vuph.vn/schema/categories"
                 version="1.0">
     <xsl:output method="html" indent="yes" encoding="UTF-8"/>
-    <xsl:template match="/">
-        <html>
-            <body>
-                <xsl:apply-templates/>
-            </body>
-        </html>
-    </xsl:template>
-    
-    <xsl:template match="ns3:categories">
-        <xsl:for-each select="ns2:category">
+    <xsl:template match="//*[local-name()='category'][@categoryName='Drum']">
+        <xsl:for-each select=".//*[local-name()='instrument']">
             <div class="item_pro_cat">
                 <div class="product-thumb">
                     <div class="image">
-                        <a href="https://ducthuong.com.vn/fender-villager-sce-12-day.html">
-                            <img src="https://ducthuong.com.vn/image/cache/catalog/GUITAR/Fender/Fender Villager Sce 12 Dây-780x720.jpg" alt=" Fender Villager Sce 12 Dây" title=" Fender Villager Sce 12 Dây" class="img-responsive"/>
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select=".//*[local-name()='url']/text()"/>
+                            </xsl:attribute>
+                            <img>
+                                <xsl:attribute name="src">                                    
+                                    <xsl:value-of select=".//*[local-name()='imageUrl']/text()"/>
+                                </xsl:attribute>
+                            </img> 
                         </a>
                     </div>
                     <div class="caption">
                         <div class="name">
-                            <a href="https://ducthuong.com.vn/fender-villager-sce-12-day.html">
-                                <h4> Fender Villager Sce 12 Dây</h4>
+                            <a href="">
+                                <h4> 
+                                    <xsl:value-of select=".//*[local-name()='name']/text()"/>
+                                </h4>
                             </a>
                         </div>
                         <div class="rating">
@@ -60,14 +61,27 @@
                             </span>
                         </div>
                         <p class="price">
-                            10.880.000 đ                 
+                            <xsl:value-of select=".//*[local-name()='price']"/>                 
                         </p>
                         <span class="readmore">
-                            <a href="https://ducthuong.com.vn/fender-villager-sce-12-day.html">xem thêm</a>
+                            <a href="">xem thêm</a>
                         </span>
                     </div>
                 </div>
             </div>
         </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="*[local-name()='category'][@categoryName='Organ']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Piano']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Flute']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Guitar']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Harmonica']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Cajon']">
     </xsl:template>
 </xsl:stylesheet>

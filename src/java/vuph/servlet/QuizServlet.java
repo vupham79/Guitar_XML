@@ -11,25 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.stream.StreamResult;
+import vuph.constant.Constant;
 import vuph.dao.CategoriesDAO;
 import vuph.dao.UserDAO;
 import vuph.dto.UserDTO;
-import vuph.generateObject.Categories;
-import vuph.util.JAXBUtil;
 
 /**
  *
  * @author VuPH
  */
-public class LoginServlet extends HttpServlet {
-    // Servlets
-
-    // Pages
-    private final String LOGIN_PAGE = "login.jsp";
-    private final String HOME_PAGE = "index.jsp";
-    private final String ADMIN_PAGE = "admin.jsp";
-
+public class QuizServlet extends HttpServlet {
+    private final String HOME = "index.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,30 +34,50 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_PAGE;
+        String url = "index.jsp";
         try {
-            String username = request.getParameter("txtUsername");
-            String password = request.getParameter("txtPassword");
-            // Check login
-            UserDAO dao = new UserDAO();
-            UserDTO dto = dao.checkLogin(username, password);
-            if (dto != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("USER", dto);
-                if (dto.isIsAdmin()) {
-                    url = ADMIN_PAGE;
+            HttpSession session = request.getSession();
+            UserDTO user = (UserDTO) session.getAttribute("USER");
+            String username = user.getUsername();
+            String answers = request.getParameter("answer");
+            String[] answer = answers.split(" ");
+            CategoriesDAO catesDAO = new CategoriesDAO();
+            int cateId = -1;
+            if (answer[1].equals("3")) {
+                if (answer[0].equals("2")) {
+                    cateId = catesDAO.getCategoryIdByName(Constant.ELECTRIC_GUITAR);
                 } else {
-                    url = HOME_PAGE;
-                    CategoriesDAO catesDAO = new CategoriesDAO();
-                    Categories cates = catesDAO.getAllCategories();
-                    StreamResult rs = JAXBUtil.marshall(cates);
-                    request.setAttribute("XML", rs.getOutputStream().toString());
+                    cateId = catesDAO.getCategoryIdByName(Constant.CLASSIC_GUITAR);
                 }
+            } else if (answer[1].equals("4")) {
+                if (answer[0].equals("2")) {
+                    cateId = catesDAO.getCategoryIdByName(Constant.PIANO);
+                } else {
+                    cateId = catesDAO.getCategoryIdByName(Constant.ORGAN);
+                }
+            } else if (answer[1].equals("5")) {
+                if (answer[0].equals("2")) {
+                    cateId = catesDAO.getCategoryIdByName(Constant.HARMONICA);
+                } else {
+                    cateId = catesDAO.getCategoryIdByName(Constant.FLUTE);
+                }
+            } else if (answer[1].equals("6")) {
+                if (answer[0].equals("2")) {
+                    cateId = catesDAO.getCategoryIdByName(Constant.DRUM);
+                } else {
+                    cateId = catesDAO.getCategoryIdByName(Constant.CAJON);
+                }
+            }
+            UserDAO userDAO = new UserDAO();
+            boolean update = userDAO.updateFavor(username, cateId);
+            if (update) {
+                url = HOME;
+                request.setAttribute("SUCCESS", "Quiz Finished!");
             } else {
-                request.setAttribute("error", "Username or Password not right!");
+                request.setAttribute("ERROR", "Something wrong happened!");
             }
         } catch (Exception e) {
-            log("LoginServlet: " + e);
+            log("QuizServlet: " + e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

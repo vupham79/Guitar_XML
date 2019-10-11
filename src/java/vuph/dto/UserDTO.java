@@ -7,24 +7,34 @@ import java.io.Serializable;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author VuPH
  */
 public class UserDTO implements Serializable {
+
     private String username;
     private String password;
     private String fullname;
+    private int cateIdOfFavor;
     private boolean isAdmin;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String fullname, boolean isAdmin) {
+    public UserDTO(String username, String fullname, boolean isAdmin, int cateIdOfFavor) {
         this.username = username;
         this.fullname = fullname;
         this.isAdmin = isAdmin;
+        this.cateIdOfFavor = cateIdOfFavor;
+    }
+
+    public int getCateIdOfFavor() {
+        return cateIdOfFavor;
+    }
+
+    public void setCateIdOfFavor(int cateIdOfFavor) {
+        this.cateIdOfFavor = cateIdOfFavor;
     }
 
     public String getUsername() {
