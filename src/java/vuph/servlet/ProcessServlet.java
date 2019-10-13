@@ -22,6 +22,7 @@ public class ProcessServlet extends HttpServlet {
     private final String LOGOUT_SERVLET = "LogoutServlet";
     private final String CRAWL_SERVLET = "CrawlServlet";
     private final String QUIZ_SERVLET = "QuizServlet";
+    private final String EXPORT_PDF = "PDFServlet";
     // Pages
     private final String INVALID_PAGE = "invalid.html";
     private final String QUIZ_PAGE = "quiz.jsp";
@@ -56,6 +57,8 @@ public class ProcessServlet extends HttpServlet {
                 url = LOGIN_PAGE;
             } else if (action.equals("quiz")) {
                 url = QUIZ_SERVLET;
+            } else if (action.equals("Export to PDF")) {
+                url = EXPORT_PDF;
             }
         } catch (Exception e) {
             log("ProcessServlet: " + e);

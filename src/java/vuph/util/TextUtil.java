@@ -7,7 +7,7 @@ package vuph.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import vuph.xmlchecker.XMLSyntaxChecker;
+import state_machine.XMLSyntaxChecker;
 
 /**
  *
@@ -16,7 +16,7 @@ import vuph.xmlchecker.XMLSyntaxChecker;
 public class TextUtil {
     public static String wellformHTML(String src){
         src = getBody(src);
-//        src = removeMiscellaneousTags(src);
+        src = removeMiscellaneousTags(src);
         
         XMLSyntaxChecker checker = new XMLSyntaxChecker();
         src = checker.check(src);

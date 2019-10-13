@@ -11,8 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.transform.stream.StreamResult;
 import vuph.constant.Constant;
+import vuph.dao.CategoriesDAO;
+import vuph.dto.UserDTO;
+import vuph.generateObject.Categories;
 import vuph.util.CrawlerUltimate;
+import vuph.util.JAXBUtil;
 import vuph.util.XMLUtilities;
 
 /**
@@ -22,6 +28,7 @@ import vuph.util.XMLUtilities;
 public class CrawlServlet extends HttpServlet {
 
     private final String ADMIN_JSP = "admin.jsp";
+    private final String UNAUTHORIZED_PAGE = "unauthorized.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,33 +42,44 @@ public class CrawlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ADMIN_JSP;
+        String url = UNAUTHORIZED_PAGE;
         try {
+            HttpSession session = request.getSession();
+            UserDTO dto = (UserDTO) session.getAttribute("USER");
+            if (!dto.isIsAdmin()) {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
+            url = ADMIN_JSP;
             ServletContext context = request.getServletContext();
             String realPath = context.getRealPath("/");
+            XMLUtilities xmlUtils = new XMLUtilities();
             String xmlConfigPath;
             String xslPath;
             String xsdPath = realPath + Constant.XSD_STORE;
-            String rs;
+            String xml;
             xmlConfigPath = realPath + Constant.CONFIG_WEBCRAWL;
             // DUC THUONG
             xslPath = realPath + Constant.XSL_DUC_THUONG;
-            rs = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            XMLUtilities.saveToDB(rs, xsdPath);
+            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
+            xmlUtils.saveToDB(xml, xsdPath);
             // NHAC CU DONG NAI
             xslPath = realPath + Constant.XSL_NHAC_CU_DONG_NAI;
-            rs = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            XMLUtilities.saveToDB(rs, xsdPath);
+            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
+            xmlUtils.saveToDB(xml, xsdPath);
             // SAI GON MUSICAL
             xslPath = realPath + Constant.XSL_SAI_GON_MUSICAL;
-            rs = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            XMLUtilities.saveToDB(rs, xsdPath);
+            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
+            xmlUtils.saveToDB(xml, xsdPath);
             // HARMONICASHOP
             xslPath = realPath + Constant.XSL_HARMONICASHOP;
-            rs = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            XMLUtilities.saveToDB(rs, xsdPath);
+            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
+            xmlUtils.saveToDB(xml, xsdPath);
             System.out.println("Finish");
             request.setAttribute("SUCCESS", "Crawl successfully");
+            CategoriesDAO catesDAO = new CategoriesDAO();
+            Categories cates = catesDAO.getAllCategories();
+            StreamResult rs = JAXBUtil.marshall(cates);
+            context.setAttribute("XML", rs.getOutputStream().toString());
         } catch (Exception e) {
             request.setAttribute("ERROR", "Crawl failed");
             log("CrawlServlet: " + e);

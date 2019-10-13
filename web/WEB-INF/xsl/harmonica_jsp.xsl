@@ -20,12 +20,21 @@
                 <div class="product-thumb">
                     <div class="image">
                         <a>
+                            <xsl:attribute name="target">
+                                <xsl:value-of select="'_blank'"/>
+                            </xsl:attribute>
                             <xsl:attribute name="href">
                                 <xsl:value-of select=".//*[local-name()='url']/text()"/>
                             </xsl:attribute>
                             <img>
-                                <xsl:attribute name="src">                                    
-                                    <xsl:value-of select=".//*[local-name()='imageUrl']/text()"/>
+                                <xsl:attribute name="src">  
+                                    <xsl:variable name="imageUrl" select=".//*[local-name()='imageUrl']"/>
+                                    <xsl:if test="$imageUrl">
+                                        <xsl:value-of select="$imageUrl"/>
+                                    </xsl:if>
+                                    <xsl:if test="$imageUrl=''">
+                                        <xsl:value-of select="'img\noimage.png'"/>
+                                    </xsl:if>        
                                 </xsl:attribute>
                             </img> 
                         </a>
@@ -61,10 +70,18 @@
                             </span>
                         </div>
                         <p class="price">
-                            <xsl:value-of select=".//*[local-name()='price']"/>                 
+                            <xsl:value-of select="format-number((.//*[local-name()='price']/text()), '###,### đ')"/>                 
                         </p>
                         <span class="readmore">
-                            <a href="">xem thêm</a>
+                            <a>
+                                <xsl:attribute name="href">
+                                    <xsl:value-of select=".//*[local-name()='url']/text()"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="target">
+                                    <xsl:value-of select="'_blank'"/>
+                                </xsl:attribute>
+                                BUY
+                            </a>
                         </span>
                     </div>
                 </div>
@@ -82,6 +99,8 @@
     </xsl:template>
     <xsl:template match="*[local-name()='category'][@categoryName='Drum']">
     </xsl:template>
-    <xsl:template match="*[local-name()='category'][@categoryName='Guitar']">
+    <xsl:template match="*[local-name()='category'][@categoryName='Classic Guitar']">
+    </xsl:template>
+    <xsl:template match="*[local-name()='category'][@categoryName='Electric Guitar']">
     </xsl:template>
 </xsl:stylesheet>

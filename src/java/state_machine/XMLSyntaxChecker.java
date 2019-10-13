@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vuph.xmlchecker;
+package state_machine;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import static vuph.xmlchecker.SyntaxState.*;
+import static state_machine.SyntaxState.*;
 /**
  *
  * @author VuPH

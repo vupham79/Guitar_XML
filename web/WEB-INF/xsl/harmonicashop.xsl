@@ -32,7 +32,7 @@
                 <xsl:call-template name="instrumentTemplate">
                     <xsl:with-param name="name" select=".//h2[@class='tieude']/a/text()"/>
                     <xsl:with-param name="price" select=".//p[@class='gia']/strong/text()"/>
-                    <xsl:with-param name="imageUrl" select=".//p[@class='anh hvrshrinkeffects']//img/@src"/>
+                    <xsl:with-param name="imageUrl" select=".//img/@src"/>
                     <xsl:with-param name="url" select=".//h2[@class='tieude']/a/@href"/>
                 </xsl:call-template>
             </xsl:if>

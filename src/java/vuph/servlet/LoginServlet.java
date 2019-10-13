@@ -11,12 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.stream.StreamResult;
-import vuph.dao.CategoriesDAO;
 import vuph.dao.UserDAO;
 import vuph.dto.UserDTO;
-import vuph.generateObject.Categories;
-import vuph.util.JAXBUtil;
 
 /**
  *
@@ -44,22 +40,22 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = LOGIN_PAGE;
         try {
+            HttpSession session = request.getSession();
+            UserDTO dto = (UserDTO) session.getAttribute("USER");
+            if (dto != null) {
+                request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+            }
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
             // Check login
             UserDAO dao = new UserDAO();
-            UserDTO dto = dao.checkLogin(username, password);
+            dto = dao.checkLogin(username, password);
             if (dto != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("USER", dto);
                 if (dto.isIsAdmin()) {
                     url = ADMIN_PAGE;
                 } else {
                     url = HOME_PAGE;
-                    CategoriesDAO catesDAO = new CategoriesDAO();
-                    Categories cates = catesDAO.getAllCategories();
-                    StreamResult rs = JAXBUtil.marshall(cates);
-                    request.setAttribute("XML", rs.getOutputStream().toString());
                 }
             } else {
                 request.setAttribute("error", "Username or Password not right!");

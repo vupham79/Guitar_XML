@@ -26,8 +26,9 @@ public class UserDAO {
         UserDTO dto = null;
         try {
             con = DBUtil.getConnection();
-            String sql = "use Instruments "
-                    + "select fullname, isAdmin, cateIdOfFavor from tblUser where username=? and password=?";
+            String sql = "select fullname, isAdmin, cateIdOfFavor "
+                    + "from tblUser "
+                    + "where username=? and password=?";
             stm = con.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);
@@ -36,7 +37,19 @@ public class UserDAO {
                 String fullname = rs.getString(1);
                 boolean isAdmin = rs.getBoolean(2);
                 int cateIdOfFavor = rs.getInt(3);
-                dto = new UserDTO(username, fullname, isAdmin, cateIdOfFavor);
+                String cateFavorName = "";
+                if (cateIdOfFavor != 0) {
+                    sql = "select name "
+                            + "from tblCategory "
+                            + "where categoryId=?";
+                    stm = con.prepareStatement(sql);
+                    stm.setInt(1, cateIdOfFavor);
+                    rs = stm.executeQuery();
+                    if (rs.next()) {
+                        cateFavorName = rs.getString(1);
+                    }
+                }
+                dto = new UserDTO(username, fullname, isAdmin, cateIdOfFavor, cateFavorName);
             }
         } finally {
             closeConnection();

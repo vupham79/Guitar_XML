@@ -94,4 +94,16 @@ public class JAXBUtil implements Serializable {
             return null;
         }
     }
+    
+    public static <T> void marshallToFile(T obj, String outPath) {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(obj.getClass());
+            Marshaller mar = jc.createMarshaller();
+            mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            mar.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            mar.marshal(obj, new File(outPath));
+        } catch (JAXBException e) {
+            System.out.println("marshall: " + e);
+        }
+    }
 }

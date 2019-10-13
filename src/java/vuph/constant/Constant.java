@@ -14,7 +14,7 @@ public class Constant {
     public static final String PATH_SCHEMA = "WEB-INF/schema/";
     public static final String PATH_STYLESHEET = "WEB-INF/xsl/";
     public static final String PATH_XML = "WEB-INF/document/";
-    public static final String PATH_XML_OUTPUT = "WEB-INF/classes/vuph/xmlOutput/";
+    public static final String PATH_XML_OUTPUT = "WEB-INF/document/output.xml";
 
     // CONFIG
     public static final String CONFIG_WEBCRAWL = "WEB-INF/document/config.xml";
@@ -47,7 +47,7 @@ public class Constant {
     public static final String USER_AGENT = "Mozilla/5.0 (compatible; MSIE 6.0; Windows NT 5.0)";
     
     // IMAGE URL 
-    public static final String URL_IMAGE = "resource/image";
+    public static final String URL_IMAGE = "/img";
     
     // CATEGORY
     public static final String CLASSIC_GUITAR = "Classic Guitar";
@@ -58,4 +58,10 @@ public class Constant {
     public static final String DRUM = "Drum";
     public static final String HARMONICA = "Harmonica";
     public static final String CAJON = "Cajon";
+    
+    // XSL FO
+    public static final String INSTRUMENT_FO_XSL = "/WEB-INF/xsl/instrumentFO.xsl";
+    
+    // FO
+    public static final String INSTRUMENT_FO = "/WEB-INF/xsl/instrumentFO.fo";
 }

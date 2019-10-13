@@ -27,7 +27,17 @@
                 <div style="text-align: center"><h6 class="text-danger" style="text-align: center">${requestScope.ERROR}</h6></div>
                 <div id="spinner" style="text-align: center" class="noDisplay"><p class="spinner-border"></p></div>
                 <form action="ProcessServlet" class="form-control-lg btn-block">
-                    <input id="btnCrawl" onclick="btnCrawlClick()" type="submit" name="action" value="Crawl" class="btn btn-outline-light btn-block"/>
+                    <input id="btnCrawl" onclick="onLoadCrawl()" 
+                           type="submit" name="action" 
+                           value="Crawl" 
+                           class="btn btn-light btn-block"/>
+                </form>
+                <form action="ProcessServlet" class="form-control-lg btn-block">
+                    <input id="btnPDF"
+                           type="submit" name="action" 
+                           value="Export to PDF"
+                           onclick="onLoadPDF()"
+                           class="btn btn-light btn-block"/>
                 </form>
                 <form action="ProcessServlet" class="form-control-lg">
                     <input id="btnLogout" type="submit" name="action" value="Log out" class="btn btn-danger btn-block"/>
@@ -36,14 +46,27 @@
         </div>
     </body>
     <script>
-        function btnCrawlClick() {
+        function onLoadCrawl() {
             let element = document.getElementById("btnCrawl");
             element.setAttribute("disabled", true);
             element = document.getElementById("btnLogout");
             element.setAttribute("disabled", true);
+            element = document.getElementById("btnPDF");
+            element.setAttribute("disabled", true);
             element = document.getElementById("spinner");
             element.classList.remove("noDisplay");
             window.location.href = '/XML_SE63200/CrawlServlet';
+        }
+        function onLoadPDF() {
+            let element = document.getElementById("btnCrawl");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("btnLogout");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("btnPDF");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("spinner");
+            element.classList.remove("noDisplay");
+            window.location.href = '/XML_SE63200/PDFServlet';
         }
     </script>
 </html>

@@ -29,7 +29,11 @@ import vuph.generateObject.Store;
  */
 public class XMLUtilities implements Serializable {
 
-    public static <T> T unmarshal(T obj, StringReader xml, String xsdPath) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    
+    public <T> T unmarshal(T obj, StringReader xml, String xsdPath) {
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(new StreamSource(xsdPath));
@@ -46,18 +50,15 @@ public class XMLUtilities implements Serializable {
         }
     }
 
-    public static void saveToDB(String xml, String xsd) {
-        Connection conn = null;
+    public void saveToDB(String xml, String xsd) {
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            con = DBUtil.getConnection();
+            con.setAutoCommit(false);
             String sql;
-            PreparedStatement stm;
-            ResultSet rs;
             Store store = unmarshal(new Store(), new StringReader(xml), xsd);
             // Get store id
-            sql = "use Instruments select storeId from tblStore where name=?";
-            stm = conn.prepareStatement(sql);
+            sql = "select storeId from tblStore where name=?";
+            stm = con.prepareStatement(sql);
             stm.setString(1, store.getName());
             rs = stm.executeQuery();
             int storeId = -1;
@@ -67,8 +68,8 @@ public class XMLUtilities implements Serializable {
             for (int i = 0; i < store.getCategories().getCategory().size(); i++) {
                 Category category = store.getCategories().getCategory().get(i);
                 // Get category id
-                sql = "use Instruments select categoryId from tblCategory where name=?";
-                stm = conn.prepareStatement(sql);
+                sql = "select categoryId from tblCategory where name=?";
+                stm = con.prepareStatement(sql);
                 stm.setString(1, category.getCategoryName());
                 rs = stm.executeQuery();
                 int cateId = -1;
@@ -78,15 +79,15 @@ public class XMLUtilities implements Serializable {
                 int instrumentsSize = category.getInstrument().size();
                 if (instrumentsSize > 0) {
                     // Delete old instruments
-                    sql = "use Instruments update tblInstrument set isDeleted=1 where storeId=? and categoryId=?";
-                    stm = conn.prepareStatement(sql);
+                    sql = "update tblInstrument set isDeleted=1 where storeId=? and categoryId=?";
+                    stm = con.prepareStatement(sql);
                     stm.setInt(1, storeId);
                     stm.setInt(2, cateId);
                     stm.executeUpdate();
                     // Add new instruments
-                    sql = "use Instruments insert into tblInstrument(name, price, url, categoryId, storeId, imageUrl) "
-                            + "values(?,?,?,?,?,?)";
-                    stm = conn.prepareStatement(sql);
+                    sql = "insert into tblInstrument(name, price, url, categoryId, storeId, imageUrl, viewNo, isDeleted) "
+                            + "values(?,?,?,?,?,?,?,?)";
+                    stm = con.prepareStatement(sql);
                     for (int j = 0; j < instrumentsSize; j++) {
                         Instrument instrument = category.getInstrument().get(j);
                         stm.setString(1, instrument.getName());
@@ -95,19 +96,38 @@ public class XMLUtilities implements Serializable {
                         stm.setInt(4, cateId);
                         stm.setInt(5, storeId);
                         stm.setString(6, instrument.getImageUrl());
+                        stm.setInt(7, 0);
+                        stm.setBoolean(8, false);
                         stm.addBatch();
                     }
                     stm.executeBatch();
-                    conn.commit();
+                    con.commit();
                 }
             }
         } catch (SQLException e) {
             try {
-                conn.rollback();
+                con.rollback();
             } catch (SQLException ex) {
                 System.out.println("saveToDB-rollback(): " + ex);
             }
             System.out.println("saveToDB: " + e);
+        } finally {
+        }
+    }
+    
+    public void closeConnection() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("closeConnection: " + ex);
         }
     }
 }

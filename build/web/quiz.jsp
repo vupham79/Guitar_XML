@@ -22,7 +22,7 @@
             <c:if test="${sessionScope.USER.isIsAdmin()}">
                 <c:redirect url="admin.jsp"/>
             </c:if>
-            <c:if test="${sessionScope.USER.getCateIdOfFavor() != null && sessionScope.USER.getCateIdOfFavor() != -1}">
+            <c:if test="${sessionScope.USER.getCateIdOfFavor() != null && sessionScope.USER.getCateIdOfFavor() != 0}">
                 <c:redirect url="index.jsp"/>
             </c:if>
             <div class="container">
@@ -129,6 +129,7 @@
             </div>
         </div>
     </body>
+    <%@include file="footer.jsp" %>
     <script>
         let question1 = false;
         let question2 = false;

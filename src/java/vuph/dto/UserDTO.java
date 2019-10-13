@@ -16,17 +16,27 @@ public class UserDTO implements Serializable {
     private String username;
     private String password;
     private String fullname;
+    private String cateFavorName;
     private int cateIdOfFavor;
     private boolean isAdmin;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String fullname, boolean isAdmin, int cateIdOfFavor) {
+    public UserDTO(String username, String fullname, boolean isAdmin, int cateIdOfFavor, String cateFavorName) {
         this.username = username;
         this.fullname = fullname;
         this.isAdmin = isAdmin;
         this.cateIdOfFavor = cateIdOfFavor;
+        this.cateFavorName = cateFavorName;
+    }
+
+    public String getCateFavorName() {
+        return cateFavorName;
+    }
+
+    public void setCateFavorName(String cateFavorName) {
+        this.cateFavorName = cateFavorName;
     }
 
     public int getCateIdOfFavor() {

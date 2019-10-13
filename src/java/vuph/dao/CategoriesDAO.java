@@ -74,6 +74,7 @@ public class CategoriesDAO implements Serializable {
                     + "on tblCategory.categoryId = tblInstrument.categoryId "
                     + "inner join tblStore "
                     + "on tblStore.storeId = tblInstrument.storeId "
+                    + "where isDeleted = 0 "
                     + "ORDER BY tblInstrument.categoryId";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -88,7 +89,6 @@ public class CategoriesDAO implements Serializable {
             String cateName;
             int cateId;
             categories = new Categories();
-            int counter = 1;
             while (rs.next()) {
                 insId = rs.getInt(1);
                 insName = rs.getString(2);
@@ -103,22 +103,21 @@ public class CategoriesDAO implements Serializable {
                 instrument = new Instrument(insName, BigDecimal.valueOf(insPrice), insImg, insUrl, BigInteger.valueOf(insId), BigInteger.valueOf(viewNo), storeLogo, storeName);
                 if (category != null) {
                     if (!category.getCategoryName().equals(cateName)) {
-                        category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(counter));
-                        counter++;
+                        category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(cateId));
                         categories.getCategory().add(category);
                     }
                 } else {
-                    category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(counter));
-                    counter++;
+                    category = new Category(cateName, BigInteger.valueOf(cateId), counts.get(cateId));
+                    categories.getCategory().add(category);
                 }
                 category.getInstrument().add(instrument);
             }
+            return categories;
         } catch (Exception e) {
             System.out.println("getAllCategories: " + e);
             return null;
         } finally {
             closeConnection();
-            return categories;
         }
     }
 

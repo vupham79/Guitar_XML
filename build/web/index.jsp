@@ -21,10 +21,14 @@
                 <c:redirect url="admin.jsp"/>
             </c:if>
             <c:if var="login" test="${sessionScope.USER != null}">
-                <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() == null 
-                                            || sessionScope.USER.getCateIdOfFavor() == 0}">
-                    <c:redirect url="quiz.jsp"/>
+                <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() != null 
+                                            && sessionScope.USER.getCateIdOfFavor() != 0}">
+                      <c:set var="cateFavorName" value="${sessionScope.USER.getCateFavorName()}"/>
+                    <c:redirect url="${cateFavorName.replace(' ', '')}.jsp"/>
                 </c:if>
+            </c:if>
+            <c:if test="${not didQuiz}">
+                <c:redirect url="organ.jsp"/>
             </c:if>
             <div class="container">
                 <div class="row">
@@ -36,8 +40,9 @@
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <form class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                                <form action="ProcessServlet" class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="text" name="txtSearch" placeholder="Tìm kiếm..." aria-label="Search"/>
+                                    <input type="submit" name="action" value="Search" class="form-control mr-sm-2"/>
                                 </form>
                                 <c:if test="${didQuiz || not login}">
                                     <form action="ProcessServlet" class="form-inline">
@@ -67,4 +72,5 @@
             </div>
         </div>
     </body>
+    <%@include file="footer.jsp" %>
 </html>

@@ -1,4 +1,4 @@
-package vuph.xmlchecker;
+package state_machine;
 
 import java.util.Arrays;
 import java.util.List;

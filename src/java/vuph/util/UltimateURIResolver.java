@@ -41,11 +41,13 @@ public class UltimateURIResolver implements URIResolver {
                 url = new URL(href);
                 connection = url.openConnection();
                 connection.addRequestProperty("User-Agent", Constant.USER_AGENT);
+                connection.setConnectTimeout(20 * 1000);
+                connection.setReadTimeout(20 * 1000);
                 System.out.println("Connect: " + href);
                 is = connection.getInputStream();
                 ss = preProcessInputStream(is);
                 return ss;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println("UltimateURIResolver-resolve: " + e);
             }
         }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fop>
+    <renderers>
+        <renderer mime="application/pdf">
+            <fonts>
+                <directory recursive="true">C:\Windows\Fonts</directory>
+            </fonts>
+        </renderer>
+    </renderers>
+</fop>

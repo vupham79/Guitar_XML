@@ -21,7 +21,10 @@ import vuph.dto.UserDTO;
  * @author VuPH
  */
 public class QuizServlet extends HttpServlet {
+
     private final String HOME = "index.jsp";
+    private final String LOGIN_PAGE = "login.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,37 +37,50 @@ public class QuizServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "index.jsp";
+        String url = LOGIN_PAGE;
         try {
             HttpSession session = request.getSession();
-            UserDTO user = (UserDTO) session.getAttribute("USER");
-            String username = user.getUsername();
+            UserDTO dto = (UserDTO) session.getAttribute("USER");
+            if (!dto.isIsAdmin()) {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
+            url = HOME;
+            String username = dto.getUsername();
             String answers = request.getParameter("answer");
             String[] answer = answers.split(" ");
             CategoriesDAO catesDAO = new CategoriesDAO();
-            int cateId = -1;
+            String cateName = "";
+            int cateId = 0;
             if (answer[1].equals("3")) {
                 if (answer[0].equals("2")) {
+                    cateName = Constant.ELECTRIC_GUITAR;
                     cateId = catesDAO.getCategoryIdByName(Constant.ELECTRIC_GUITAR);
                 } else {
+                    cateName = Constant.CLASSIC_GUITAR;
                     cateId = catesDAO.getCategoryIdByName(Constant.CLASSIC_GUITAR);
                 }
             } else if (answer[1].equals("4")) {
                 if (answer[0].equals("2")) {
+                    cateName = Constant.PIANO;
                     cateId = catesDAO.getCategoryIdByName(Constant.PIANO);
                 } else {
+                    cateName = Constant.ORGAN;
                     cateId = catesDAO.getCategoryIdByName(Constant.ORGAN);
                 }
             } else if (answer[1].equals("5")) {
                 if (answer[0].equals("2")) {
+                    cateName = Constant.HARMONICA;
                     cateId = catesDAO.getCategoryIdByName(Constant.HARMONICA);
                 } else {
+                    cateName = Constant.FLUTE;
                     cateId = catesDAO.getCategoryIdByName(Constant.FLUTE);
                 }
             } else if (answer[1].equals("6")) {
                 if (answer[0].equals("2")) {
+                    cateName = Constant.DRUM;
                     cateId = catesDAO.getCategoryIdByName(Constant.DRUM);
                 } else {
+                    cateName = Constant.CAJON;
                     cateId = catesDAO.getCategoryIdByName(Constant.CAJON);
                 }
             }
@@ -73,6 +89,7 @@ public class QuizServlet extends HttpServlet {
             if (update) {
                 url = HOME;
                 request.setAttribute("SUCCESS", "Quiz Finished!");
+                request.setAttribute("CATENAME", cateName);
             } else {
                 request.setAttribute("ERROR", "Something wrong happened!");
             }

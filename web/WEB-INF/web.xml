@@ -24,6 +24,10 @@
         <servlet-name>QuizServlet</servlet-name>
         <servlet-class>vuph.servlet.QuizServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PDFServlet</servlet-name>
+        <servlet-class>vuph.servlet.PDFServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>QuizServlet</servlet-name>
         <url-pattern>/QuizServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PDFServlet</servlet-name>
+        <url-pattern>/PDFServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -56,7 +56,18 @@
                         <xsl:value-of select="'Drum'"/>
                     </xsl:attribute>
                     <xsl:call-template name="instrumentList">
-                        <xsl:with-param name="href" select="document(@link_ducthuong_drum)"/>
+                        <xsl:with-param name="href" select="document(@link_ducthuong_trong_dien_tu)"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="instrumentList">
+                        <xsl:with-param name="href" select="document(@link_ducthuong_trong_jazz)"/>
+                    </xsl:call-template>
+                </xsl:element>
+                <xsl:element name="category" xmlns="http://vuph.vn/schema/category">
+                    <xsl:attribute name="categoryName">
+                        <xsl:value-of select="'Cajon'"/>
+                    </xsl:attribute>
+                    <xsl:call-template name="instrumentList">
+                        <xsl:with-param name="href" select="document(@link_ducthuong_trong_cajon)"/>
                     </xsl:call-template>
                 </xsl:element>
             </xsl:element>
