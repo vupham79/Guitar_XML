@@ -8,7 +8,9 @@
         Purpose of transformation follows.
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:java="http://xml.apache.org/xslt/java"
+                exclude-result-prefixes="java">
     <xsl:output method="xml" version="1.0" indent="yes" encoding="UTF-8"/>
     <xsl:param name="pathFile" select="'pdf'"/>
     <xsl:template match="/">
@@ -28,7 +30,7 @@
                               line-height="24pt" background-color="#ffe000"
                               space-after.optimum="15pt" text-align="center"
                               padding-top="3pt">
-                        Instruments PDF
+                        Instruments PDF - <xsl:value-of select="java:format(java:java.text.SimpleDateFormat.new('dd.MM.yyyy HH:mm:ss'), java:java.util.Date.new())" />
                     </fo:block>
                 </fo:static-content>
                 <fo:static-content flow-name="xsl-region-after">

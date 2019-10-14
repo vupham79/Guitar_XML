@@ -17,16 +17,9 @@
     <xsl:param name="category"/>
     <xsl:param name="page"/>
     <xsl:template match="/">
-        <xsl:if test="$page">
-            <xsl:for-each select="//*[local-name()='category'][@categoryName=$category]//*[local-name()='instrument'][position()>$page*9-9 and position()&lt;$page*9]">
-                <xsl:call-template name="item"/>
-            </xsl:for-each>
-        </xsl:if>
-        <xsl:if test="not($page)">
-            <xsl:for-each select="//*[local-name()='category'][@categoryName=$category]//*[local-name()='instrument'][position()&lt;=9]">
-                <xsl:call-template name="item"/>
-            </xsl:for-each>
-        </xsl:if>
+        <xsl:for-each select="//*[local-name()='category'][@categoryName=$category]//*[local-name()='instrument'][position()>$page*9-9 and position()&lt;=$page*9]">
+            <xsl:call-template name="item"/>
+        </xsl:for-each>
     </xsl:template>
     
     <xsl:template name="item">
@@ -35,7 +28,7 @@
                 <div class="image">
                     <a>
                         <xsl:attribute name="href">
-                            <xsl:value-of select=".//*[local-name()='url']/text()"/>
+                            <xsl:value-of select="concat('CountServlet?id=', .//@id, '&amp;url=',.//*[local-name()='url']/text())"/>
                         </xsl:attribute>
                         <img>
                             <xsl:attribute name="src">  
@@ -86,7 +79,7 @@
                     <span class="readmore">
                         <a>
                             <xsl:attribute name="href">
-                                <xsl:value-of select=".//*[local-name()='url']/text()"/>
+                                <xsl:value-of select="concat('CountServlet?id=', .//@id, '&amp;url=',.//*[local-name()='url']/text())"/>
                             </xsl:attribute>
                             <xsl:attribute name="target">
                                 <xsl:value-of select="'_blank'"/>

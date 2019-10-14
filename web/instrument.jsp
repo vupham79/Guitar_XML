@@ -25,7 +25,7 @@
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
                         <div class="col-lg-2 col-md-2">
                             <a class="navbar-brand" href="index.jsp">
-                                <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
+                                <img src="img/logo.png" width="120" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
                         </div>
                         <div class="col-lg-8 col-md-8 hidden-sm hidden-xs">
@@ -92,21 +92,36 @@
                             </div>
                             <div class="col-lg-9">
                                 <c:set var="category" value="${param.category}"/>
-                                <c:set var="page" value="${param.page}"/>
+                                <c:if var="page0" test="${param.page == null}">
+                                    <c:set var="currentPage" value="1"/>
+                                </c:if>
+                                <c:if test="${not page0}">
+                                    <c:set var="currentPage" value="${param.page}"/>
+                                </c:if>
                                 <c:if var="xml" test="${not empty applicationScope.XML}">
                                     <c:import var="xslt" url="WEB-INF/xsl/instrument_jsp.xsl" charEncoding="utf-8"/>
                                     <x:transform doc="${applicationScope.XML}" xslt="${xslt}">
                                         <x:param name="category" value="${category}"/>
-                                        <x:param name="page" value="${page}"/>
+                                        <x:param name="page" value="${currentPage}"/>
                                     </x:transform>
                                     <div class="container pagination">
                                         <nav aria-label="...">
                                             <ul class="pagination justify-content-center">
+                                                <c:set var="totalPage" value="${Math.ceil(applicationScope.TOTALS.get(param.category)/9)}"/>
+
+                                                <c:if var="lt10" test="${totalPage <= 10}">
+                                                    <c:set var="start" value="1"/>
+                                                    <c:set var="end" value="${totalPage}"/>
+                                                </c:if>
+                                                <c:if test="${not lt10}">
+                                                    <c:set var="start" value="${Math.max(1*1.0, ((currentPage * 1.0) - 4))}"/>
+                                                    <c:set var="end" value="${Math.min(totalPage, ((currentPage*1.0) + 5))}"/>
+                                                </c:if>
                                                 <c:forEach 
-                                                    var="i" begin="1" 
+                                                    var="i" begin="${start}" 
                                                     step="1" 
-                                                    end="${applicationScope.TOTALS.get(param.category)/9}">
-                                                    <c:if var="active" test="${param.page != null && param.page == i}">
+                                                    end="${end}">
+                                                    <c:if var="active" test="${currentPage == i}">
                                                         <li class="page-item active"><a class="page-link" href="instrument.jsp?category=${param.category}&page=${i}">${i}</a></li>
                                                         </c:if>
                                                         <c:if test="${not active}">

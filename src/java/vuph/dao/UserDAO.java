@@ -53,8 +53,8 @@ public class UserDAO {
             }
         } finally {
             closeConnection();
-            return dto;
         }
+        return dto;
     }
 
     public boolean updateFavor(String username, int cateId) {
@@ -70,7 +70,37 @@ public class UserDAO {
             System.out.println("updateFavor: " + e);
         } finally {
             closeConnection();
-            return result;
+        }
+        return result;
+    }
+
+    public static void increaseView(int insId) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtil.getConnection();
+            String sql = " exec increaseView ?";
+            stm = con.prepareStatement(sql);
+            stm.setEscapeProcessing(true);
+            stm.setInt(1, insId);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("increaseView: " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("closeConnection: " + ex);
+            }
         }
     }
 

@@ -25,7 +25,7 @@
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
                         <div class="col-lg-2 col-md-2">
                             <a class="navbar-brand" href="index.jsp">
-                                <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
+                                <img src="img/logo.png" width="120" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
                         </div>
                         <div class="col-lg-8 col-md-8 hidden-sm hidden-xs">

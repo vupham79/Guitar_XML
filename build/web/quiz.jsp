@@ -30,7 +30,7 @@
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
                         <div class="hidden-sm hidden-xs">
                             <a class="navbar-brand" href="">
-                                <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
+                                <img src="img/logo.png" width="120" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
                         </div>
                         <div class="hidden-sm hidden-xs">
