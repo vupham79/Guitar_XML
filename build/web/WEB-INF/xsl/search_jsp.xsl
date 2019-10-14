@@ -23,7 +23,8 @@
         </xsl:if>
         <xsl:if test="//*[local-name()='instrument'][contains(*[local-name()='name'], $search)]">
             <div class="cont_html_top">
-                <div class="tit_html_top">About 1,234 results (0.69 seconds) </div>
+                <div class="tit_html_top">Kết quả tìm kiếm:</div>
+                <br/>
             </div>
         </xsl:if>
         <xsl:for-each select="//*[local-name()='instrument'][contains(*[local-name()='name'], $search)]">

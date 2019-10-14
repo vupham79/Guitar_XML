@@ -20,6 +20,7 @@
             <c:if test="${sessionScope.USER.isIsAdmin()}">
                 <c:redirect url="admin.jsp"/>
             </c:if>
+            <c:redirect url="instrument.jsp?category=Organ"/>
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
@@ -36,12 +37,9 @@
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <c:if test="${sessionScope.USER.getCateIdOfFavor() == 0 
-                                              || sessionScope.USER.getCateIdOfFavor() == null}">
-                                      <form action="ProcessServlet" class="form-inline">
-                                          <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                                      </form>
-                                </c:if>
+                                <form action="favor.jsp" class="form-inline">
+                                    <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Nhạc Cụ Của Tui"/>
+                                </form>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
                                     <form action="ProcessServlet" class="form-inline">
                                         <input name="action" value="Log In" type="submit" class="btn btn-success"/>
@@ -61,25 +59,6 @@
         <div class="container">
             <div class="row">
                 <div class="cont">
-                    <c:if var="login" test="${sessionScope.USER != null}">
-                        <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() != null 
-                                                    && sessionScope.USER.getCateIdOfFavor() != 0}">
-                            <c:set var="cateFavorName" value="${sessionScope.USER.getCateFavorName()}"/>
-                            <%--<c:redirect url="instrument.jsp?category=${cateFavorName}"/>--%>
-                            <div class="col">
-                                <div class="html_footer">
-                                    <div class="icon_html_top"><img src="img/Electric Guitar.png"/></div>
-                                    <div class="cont_html_top">
-                                        <div class="tit_html_top">Nhạc cụ mà bạn phù hợp là ${cateFavorName}</div>
-                                        <div class="p_html_top">Cam kết về chất lượng và sản phẩm </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:if>
-                    <c:if test="${not didQuiz}">
-                        <c:redirect url="instrument.jsp?category=Organ"/>
-                    </c:if>
                 </div>
             </div>
         </div>

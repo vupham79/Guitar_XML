@@ -1,19 +1,31 @@
 <%-- 
-    Document   : unauthorized
-    Created on : Oct 13, 2019, 12:30:07 PM
+    Document   : favor
+    Created on : Oct 14, 2019, 8:22:22 PM
     Author     : VuPH
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
+
+<!DOCTYPE html>
 <html>
     <head>
         <title>Nhạc Cụ Của Tui</title>
         <%@include file="header.jsp"%>
         <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
+    <body class="bgwhite">
         <div class="container-fluid primary">
+            <c:if test="${empty sessionScope.USER}">
+                <c:redirect url="login.jsp"/>
+            </c:if>
+            <c:if var="admin" test="${sessionScope.USER.isIsAdmin()}">
+                <c:redirect url="admin.jsp"/>
+            </c:if>
+            <c:if test="${not admin and sessionScope.USER.getCateIdOfFavor()==0}">
+                <c:redirect url="quiz.jsp"/>
+            </c:if>
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
@@ -34,8 +46,8 @@
                                     <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Nhạc Cụ Của Tui"/>
                                 </form>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
-                                    <form action="ProcessServlet" class="form-inline">
-                                        <input name="action" value="Log In" type="submit" class="btn btn-success"/>
+                                    <form action="login.jsp" class="form-inline">
+                                        <input name="action" value="Đăng Nhập" type="submit" class="btn btn-success"/>
                                     </form>
                                 </c:if>
                                 <c:if test="${!isLogin}">
@@ -52,11 +64,18 @@
         <div class="container">
             <div class="row">
                 <div class="cont">
-                    <div class="html_footer" style="display: flex; justify-content: center">
-                        <div class="cont_html_top">
-                            <div class="tit_html_top"><img src="img/403.png"></div>
-                        </div>
-                    </div>
+                    <c:if var="login" test="${sessionScope.USER != null}">
+                        <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() != null 
+                                                    && sessionScope.USER.getCateIdOfFavor() != 0}">
+                            <c:set var="cateFavorName" value="${sessionScope.USER.getCateFavorName()}"/>
+                            <div class="col">
+                                ${sessionScope.FavorDescription}
+                            </div>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${not didQuiz}">
+                        <c:redirect url="instrument.jsp?category=Organ"/>
+                    </c:if>
                 </div>
             </div>
         </div>

@@ -1,19 +1,25 @@
 <%-- 
-    Document   : unauthorized
-    Created on : Oct 13, 2019, 12:30:07 PM
+    Document   : signup
+    Created on : Oct 14, 2019, 9:46:52 PM
     Author     : VuPH
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nhạc Cụ Của Tui</title>
-        <%@include file="header.jsp"%>
+        <%@include file="header.jsp" %>
         <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
+    <body class="bgwhite">
         <div class="container-fluid primary">
+            <c:if test="${sessionScope.USER.isIsAdmin()}">
+                <c:redirect url="admin.jsp"/>
+            </c:if>
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
@@ -50,13 +56,24 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="cont">
-                    <div class="html_footer" style="display: flex; justify-content: center">
-                        <div class="cont_html_top">
-                            <div class="tit_html_top"><img src="img/403.png"></div>
-                        </div>
-                    </div>
+            <div class="cont login-container">
+                <div class="login-form">
+                    <form action="ProcessServlet" method="POST">
+                        <label for="username">Username</label>
+                        <input name="txtUsername" id="username" type="text" class="form-control form-text"/>
+                        <label for="password">Password</label>
+                        <input name="txtPassword" id="password" type="password" class="form-control"/>
+                        <label for="password2">Confirm Password</label>
+                        <input name="txtConfirmPassword" id="password2" type="password" class="form-control"/>
+                        <label for="fullname">Fullname</label>
+                        <input name="txtFullname" id="fullname" type="text" class="form-control form-text"/>
+                        <br/>
+                        <div class="tit_html_top">${requestScope.error}</div>
+                        <div class="tit_html_top">${requestScope.success}</div>
+                        <br/>
+                        <input name="action" type="submit" value="Sign Up" class="btn btn-dark btn-block"/>
+                        <a class="btn btn-primary btn-block" href="login.jsp" role="button">Back</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -64,6 +81,9 @@
         </div>
     </body>
     <%@include file="footer.jsp" %>
+    <c:if test="${not empty sessionScope.USER}">
+        <c:redirect url="index.jsp"/>
+    </c:if>
     <script>
         function onSearch() {
             var txtSearch = document.getElementById('txtSearch').value;

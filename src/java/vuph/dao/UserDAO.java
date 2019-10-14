@@ -57,6 +57,25 @@ public class UserDAO {
         return dto;
     }
 
+    public String getFavorDescription(int id) throws SQLException {
+        String result = "";
+        try {
+            con = DBUtil.getConnection();
+            String sql = "select description "
+                    + "from tblCategory "
+                    + "where categoryId=?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                result = rs.getString(1);
+            }
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
+
     public boolean updateFavor(String username, int cateId) {
         boolean result = false;
         try {
@@ -104,6 +123,24 @@ public class UserDAO {
         }
     }
 
+    public boolean signUp(String username, String password, String fullname) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        try {
+            con = DBUtil.getConnection();
+            String sql = "insert into tblUser "
+                    + "(username, password, isAdmin, fullname, cateIdOfFavor) "
+                    + "values(?,?,0,?,0)";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, password);
+            stm.setString(3, fullname);
+            check = stm.executeUpdate() > 0;
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
+    
     public void closeConnection() {
         try {
             if (rs != null) {

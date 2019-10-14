@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author VuPH
  */
 public class ProcessServlet extends HttpServlet {
+
     // Servlets
     private final String LOGIN_SERVLET = "LoginServlet";
     private final String SEARCH_SERVLET = "SearchServlet";
@@ -24,10 +25,12 @@ public class ProcessServlet extends HttpServlet {
     private final String QUIZ_SERVLET = "QuizServlet";
     private final String EXPORT_PDF = "PDFServlet";
     private final String PUBLISH_SERVLET = "PublishServlet";
+    private final String SIGNUP_SERVLET = "SignUpServlet";
     // Pages
     private final String INVALID_PAGE = "invalid.html";
     private final String QUIZ_PAGE = "quiz.jsp";
     private final String LOGIN_PAGE = "login.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +40,6 @@ public class ProcessServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -62,6 +64,8 @@ public class ProcessServlet extends HttpServlet {
                 url = EXPORT_PDF;
             } else if (action.equals("Publish")) {
                 url = PUBLISH_SERVLET;
+            } else if (action.equals("Sign Up")) {
+                url = SIGNUP_SERVLET;
             }
         } catch (Exception e) {
             log("ProcessServlet: " + e);

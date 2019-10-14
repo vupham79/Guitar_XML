@@ -22,8 +22,9 @@ import vuph.dto.UserDTO;
  */
 public class QuizServlet extends HttpServlet {
 
-    private final String HOME = "index.jsp";
+    private final String ADMIN_PAGE = "admin.jsp";
     private final String LOGIN_PAGE = "login.jsp";
+    private final String FAVOR_PAGE = "favor.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,57 +42,66 @@ public class QuizServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO dto = (UserDTO) session.getAttribute("USER");
-            if (!dto.isIsAdmin()) {
-                request.getRequestDispatcher(url).forward(request, response);
-            }
-            url = HOME;
-            String username = dto.getUsername();
-            String answers = request.getParameter("answer");
-            String[] answer = answers.split(" ");
-            CategoriesDAO catesDAO = new CategoriesDAO();
-            String cateName = "";
-            int cateId = 0;
-            if (answer[1].equals("3")) {
-                if (answer[0].equals("2")) {
-                    cateName = Constant.ELECTRIC_GUITAR;
-                    cateId = catesDAO.getCategoryIdByName(Constant.ELECTRIC_GUITAR);
-                } else {
-                    cateName = Constant.CLASSIC_GUITAR;
-                    cateId = catesDAO.getCategoryIdByName(Constant.CLASSIC_GUITAR);
+            if (dto != null) {
+                if (dto.isIsAdmin()) {
+                    url = ADMIN_PAGE;
+                    request.getRequestDispatcher(url).forward(request, response);
+                    return;
                 }
-            } else if (answer[1].equals("4")) {
-                if (answer[0].equals("2")) {
-                    cateName = Constant.PIANO;
-                    cateId = catesDAO.getCategoryIdByName(Constant.PIANO);
-                } else {
-                    cateName = Constant.ORGAN;
-                    cateId = catesDAO.getCategoryIdByName(Constant.ORGAN);
+                if (dto.getCateIdOfFavor() != 0) {
+                    url = FAVOR_PAGE;
+                    request.getRequestDispatcher(url).forward(request, response);
+                    return;
                 }
-            } else if (answer[1].equals("5")) {
-                if (answer[0].equals("2")) {
-                    cateName = Constant.HARMONICA;
-                    cateId = catesDAO.getCategoryIdByName(Constant.HARMONICA);
-                } else {
-                    cateName = Constant.FLUTE;
-                    cateId = catesDAO.getCategoryIdByName(Constant.FLUTE);
+                String username = dto.getUsername();
+                String answers = request.getParameter("answer");
+                String[] answer = answers.split(" ");
+                CategoriesDAO catesDAO = new CategoriesDAO();
+                String cateName = "";
+                int cateId = 0;
+                if (answer[1].equals("3")) {
+                    if (answer[0].equals("2")) {
+                        cateName = Constant.ELECTRIC_GUITAR;
+                        cateId = catesDAO.getCategoryIdByName(Constant.ELECTRIC_GUITAR);
+                    } else {
+                        cateName = Constant.CLASSIC_GUITAR;
+                        cateId = catesDAO.getCategoryIdByName(Constant.CLASSIC_GUITAR);
+                    }
+                } else if (answer[1].equals("4")) {
+                    if (answer[0].equals("2")) {
+                        cateName = Constant.PIANO;
+                        cateId = catesDAO.getCategoryIdByName(Constant.PIANO);
+                    } else {
+                        cateName = Constant.ORGAN;
+                        cateId = catesDAO.getCategoryIdByName(Constant.ORGAN);
+                    }
+                } else if (answer[1].equals("5")) {
+                    if (answer[0].equals("2")) {
+                        cateName = Constant.HARMONICA;
+                        cateId = catesDAO.getCategoryIdByName(Constant.HARMONICA);
+                    } else {
+                        cateName = Constant.FLUTE;
+                        cateId = catesDAO.getCategoryIdByName(Constant.FLUTE);
+                    }
+                } else if (answer[1].equals("6")) {
+                    if (answer[0].equals("2")) {
+                        cateName = Constant.DRUM;
+                        cateId = catesDAO.getCategoryIdByName(Constant.DRUM);
+                    } else {
+                        cateName = Constant.CAJON;
+                        cateId = catesDAO.getCategoryIdByName(Constant.CAJON);
+                    }
                 }
-            } else if (answer[1].equals("6")) {
-                if (answer[0].equals("2")) {
-                    cateName = Constant.DRUM;
-                    cateId = catesDAO.getCategoryIdByName(Constant.DRUM);
+                UserDAO userDAO = new UserDAO();
+                boolean update = userDAO.updateFavor(username, cateId);
+                if (update) {
+                    url = FAVOR_PAGE;
+                    dto.setCateIdOfFavor(cateId);
+                    String favorDescription = userDAO.getFavorDescription(cateId);
+                    session.setAttribute("FavorDescription", favorDescription);
                 } else {
-                    cateName = Constant.CAJON;
-                    cateId = catesDAO.getCategoryIdByName(Constant.CAJON);
+                    request.setAttribute("ERROR", "Something wrong happened!");
                 }
-            }
-            UserDAO userDAO = new UserDAO();
-            boolean update = userDAO.updateFavor(username, cateId);
-            if (update) {
-                url = HOME;
-                request.setAttribute("SUCCESS", "Quiz Finished!");
-                request.setAttribute("CATENAME", cateName);
-            } else {
-                request.setAttribute("ERROR", "Something wrong happened!");
             }
         } catch (Exception e) {
             log("QuizServlet: " + e);

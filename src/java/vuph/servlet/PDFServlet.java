@@ -63,6 +63,7 @@ public class PDFServlet extends HttpServlet {
             UserDTO dto = (UserDTO) session.getAttribute("USER");
             if (!dto.isIsAdmin()) {
                 request.getRequestDispatcher(UNAUTHORIZED_PAGE).forward(request, response);
+                return;
             }
             String realPath = getServletContext().getRealPath("/");
             String xsl = realPath + Constant.INSTRUMENT_FO_XSL;

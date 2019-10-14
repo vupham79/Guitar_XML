@@ -36,12 +36,9 @@
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <c:if test="${sessionScope.USER.getCateIdOfFavor() == 0 
-                                              || sessionScope.USER.getCateIdOfFavor() == null}">
-                                      <form action="ProcessServlet" class="form-inline">
-                                          <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                                      </form>
-                                </c:if>
+                                <form action="favor.jsp" class="form-inline">
+                                    <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Nhạc Cụ Của Tui"/>
+                                </form>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
                                     <form action="ProcessServlet" class="form-inline">
                                         <input name="action" value="Log In" type="submit" class="btn btn-success"/>
@@ -64,12 +61,14 @@
                     <form action="ProcessServlet" method="POST">
                         <label for="username">Username</label>
                         <input name="txtUsername" id="username" type="text" class="form-control form-text"/>
-                        <br/>
                         <label for="password">Password</label>
                         <input name="txtPassword" id="password" type="password" class="form-control"/>
-                        <span>${requestScope.error}</span>
+                        <br/>
+                        <div class="tit_html_top">${requestScope.error}</div>
+                        <div class="tit_html_top">${requestScope.success}</div>
                         <br/>
                         <input name="action" type="submit" value="Login" class="btn btn-dark btn-block"/>
+                        <a class="btn btn-primary btn-block" href="signup.jsp" role="button">Sign Up</a>
                     </form>
                 </div>
             </div>
@@ -81,4 +80,13 @@
     <c:if test="${not empty sessionScope.USER}">
         <c:redirect url="index.jsp"/>
     </c:if>
+    <script>
+        function onSearch() {
+            var txtSearch = document.getElementById('txtSearch').value;
+            location.href = 'search.jsp?txtSearch=' + txtSearch;
+        }
+        var category = location.search.split('category=')[1].replace("%20", "");
+        var element = document.getElementById(category);
+        element.classList.add("bg-white");
+    </script>
 </html>

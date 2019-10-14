@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
             UserDTO dto = (UserDTO) session.getAttribute("USER");
             if (dto != null) {
                 request.getRequestDispatcher(HOME_PAGE).forward(request, response);
+                return;
             }
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
@@ -55,6 +56,10 @@ public class LoginServlet extends HttpServlet {
                 if (dto.isIsAdmin()) {
                     url = ADMIN_PAGE;
                 } else {
+                    if (dto.getCateIdOfFavor() != 0) {
+                        String favorDescription = dao.getFavorDescription(dto.getCateIdOfFavor());
+                        session.setAttribute("FavorDescription", favorDescription);
+                    }
                     url = HOME_PAGE;
                 }
             } else {

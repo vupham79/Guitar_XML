@@ -44,6 +44,7 @@ public class CrawlServlet extends HttpServlet {
             UserDTO dto = (UserDTO) session.getAttribute("USER");
             if (!dto.isIsAdmin()) {
                 request.getRequestDispatcher(url).forward(request, response);
+                return;
             }
             url = ADMIN_JSP;
             ServletContext context = request.getServletContext();

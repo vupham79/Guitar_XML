@@ -6,23 +6,22 @@
 package vuph.servlet;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import vuph.dao.UserDAO;
 
 /**
  *
  * @author VuPH
  */
-public class SearchServlet extends HttpServlet {
-    // Servlet
+public class SignUpServlet extends HttpServlet {
 
-    // Page
-    private final String INVALID_PAGE = "invalid.html";
-    private final String SEARCH_PAGE = "search.jsp";
-
+    private final String LOGIN_PAGE = "login.jsp";
+    private final String SIGN_UP_PAGE = "signup.jsp";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,13 +34,29 @@ public class SearchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = SEARCH_PAGE;
+        boolean result = false;
+        String url = SIGN_UP_PAGE;
         try {
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
+            String confirmPassword = request.getParameter("txtConfirmPassword");
+            String fullname = request.getParameter("txtFullname");
+            if (password.equals(confirmPassword)) {
+                UserDAO dao = new UserDAO();
+                result = dao.signUp(username, password, fullname);
+                if (result) {
+                    url = LOGIN_PAGE;
+                    request.setAttribute("success", "Sign Up Succeeded!");
+                } else {
+                    request.setAttribute("error", "Something Wrong Happened!");
+                }
+            } else {
+                request.setAttribute("error", "Confirm Password not matched!");
+            }
         } catch (Exception e) {
-            log("SearchServlet: " + e);
+            log("SignUpServlet: " + e);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

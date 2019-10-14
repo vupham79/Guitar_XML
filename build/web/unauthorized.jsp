@@ -17,22 +17,22 @@
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
-                        <div class="hidden-sm hidden-xs">
-                            <a class="navbar-brand" href="">
-                                <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
+                        <div class="col-lg-2 col-md-2">
+                            <a class="navbar-brand" href="index.jsp">
+                                <img src="img/logo.png" width="120" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
+                        </div>
+                        <div class="col-lg-8 col-md-8 hidden-sm hidden-xs">
+                            <div id="search" class="input-group">
+                                <input id="txtSearch" type="text" name="search" placeholder="Từ khóa" id="input-search" class="input_search form-control">
+                                <button onclick="onSearch()" type="button" class="btn_search">Tìm kiếm</button>
+                            </div>
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <form action="ProcessServlet" class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2" type="text" name="txtSearch" placeholder="Tìm kiếm..." aria-label="Search"/>
-                                    <input type="submit" name="action" value="Search" class="form-control mr-sm-2"/>
+                                <form action="favor.jsp" class="form-inline">
+                                    <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Nhạc Cụ Của Tui"/>
                                 </form>
-                                <c:if test="${didQuiz || not login}">
-                                    <form action="ProcessServlet" class="form-inline">
-                                        <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                                    </form>
-                                </c:if>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
                                     <form action="ProcessServlet" class="form-inline">
                                         <input name="action" value="Log In" type="submit" class="btn btn-success"/>
@@ -52,9 +52,25 @@
         <div class="container">
             <div class="row">
                 <div class="cont">
+                    <div class="html_footer" style="display: flex; justify-content: center">
+                        <div class="cont_html_top">
+                            <div class="tit_html_top"><img src="img/403.png"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-xs-12 conbottom1">
+        </div>
     </body>
     <%@include file="footer.jsp" %>
+    <script>
+        function onSearch() {
+            var txtSearch = document.getElementById('txtSearch').value;
+            location.href = 'search.jsp?txtSearch=' + txtSearch;
+        }
+        var category = location.search.split('category=')[1].replace("%20", "");
+        var element = document.getElementById(category);
+        element.classList.add("bg-white");
+    </script>
 </html>

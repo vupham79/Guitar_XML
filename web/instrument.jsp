@@ -36,12 +36,9 @@
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <c:if test="${sessionScope.USER.getCateIdOfFavor() == 0 
-                                              || sessionScope.USER.getCateIdOfFavor() == null}">
-                                      <form action="ProcessServlet" class="form-inline">
-                                          <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                                      </form>
-                                </c:if>
+                                <form action="favor.jsp" class="form-inline">
+                                    <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Nhạc Cụ Của Tui"/>
+                                </form>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
                                     <form action="ProcessServlet" class="form-inline">
                                         <input name="action" value="Log In" type="submit" class="btn btn-success"/>
