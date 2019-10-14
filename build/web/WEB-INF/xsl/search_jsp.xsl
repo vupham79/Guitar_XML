@@ -16,7 +16,7 @@
     <xsl:output method="html" indent="yes" encoding="UTF-8"/>
     <xsl:param name="search"/>
     <xsl:template match="/">
-        <xsl:if test="not(//*[local-name()='instrument'][contains(*[local-name()='name'], $search)])">
+        <xsl:if test="not(//*[local-name()='instrument'][contains(*[local-name()='name'], $search) or *[local-name()='name']=$search])">
             <div class="cont_html_top">
                 <div class="tit_html_top">Không tìm thấy sản phẩm phù hợp</div>
             </div>

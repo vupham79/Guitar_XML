@@ -14,7 +14,7 @@
         <%@include file="header.jsp" %>
         <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
+    <body class="bgwhite">
         <div class="container-fluid primary">
             <c:if test="${empty sessionScope.USER}">
                 <c:redirect url="login.jsp"/>

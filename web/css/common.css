@@ -91,3 +91,8 @@ html {
 .primary {
     background-color: #ffe000;
 }
+
+.pagination {
+    align-items: center;
+    justify-content: center;
+}

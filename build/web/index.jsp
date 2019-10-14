@@ -15,7 +15,7 @@
         <%@include file="header.jsp"%>
         <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
+    <body class="bgwhite">
         <div class="container-fluid primary">
             <c:if test="${sessionScope.USER.isIsAdmin()}">
                 <c:redirect url="admin.jsp"/>
@@ -24,17 +24,17 @@
                 <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() != null 
                                             && sessionScope.USER.getCateIdOfFavor() != 0}">
                       <c:set var="cateFavorName" value="${sessionScope.USER.getCateFavorName()}"/>
-                    <c:redirect url="${cateFavorName.replace(' ', '')}.jsp"/>
+                    <c:redirect url="instrument.jsp?category=${cateFavorName}"/>
                 </c:if>
             </c:if>
             <c:if test="${not didQuiz}">
-                <c:redirect url="organ.jsp"/>
+                <c:redirect url="instrument.jsp?category=Organ"/>
             </c:if>
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
                         <div class="hidden-sm hidden-xs">
-                            <a class="navbar-brand" href="">
+                            <a class="navbar-brand" href="index.jsp">
                                 <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
                         </div>

@@ -6,22 +6,26 @@
 package vuph.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import vuph.constant.Constant;
+import javax.xml.transform.stream.StreamResult;
+import vuph.dao.CategoriesDAO;
 import vuph.dto.UserDTO;
-import vuph.util.CrawlerUltimate;
-import vuph.util.XMLUtilities;
+import vuph.generateObject.Categories;
+import vuph.util.JAXBUtil;
 
 /**
  *
  * @author VuPH
  */
-public class CrawlServlet extends HttpServlet {
+public class PublishServlet extends HttpServlet {
 
     private final String ADMIN_JSP = "admin.jsp";
     private final String UNAUTHORIZED_PAGE = "unauthorized.jsp";
@@ -47,34 +51,19 @@ public class CrawlServlet extends HttpServlet {
             }
             url = ADMIN_JSP;
             ServletContext context = request.getServletContext();
-            String realPath = context.getRealPath("/");
-            XMLUtilities xmlUtils = new XMLUtilities();
-            String xmlConfigPath;
-            String xslPath;
-            String xsdPath = realPath + Constant.XSD_STORE;
-            String xml;
-            xmlConfigPath = realPath + Constant.CONFIG_WEBCRAWL;
-            // DUC THUONG
-            xslPath = realPath + Constant.XSL_DUC_THUONG;
-            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            xmlUtils.saveToDB(xml, xsdPath);
-            // NHAC CU DONG NAI
-            xslPath = realPath + Constant.XSL_NHAC_CU_DONG_NAI;
-            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            xmlUtils.saveToDB(xml, xsdPath);
-            // SAI GON MUSICAL
-            xslPath = realPath + Constant.XSL_SAI_GON_MUSICAL;
-            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            xmlUtils.saveToDB(xml, xsdPath);
-            // HARMONICASHOP
-            xslPath = realPath + Constant.XSL_HARMONICASHOP;
-            xml = CrawlerUltimate.crawl(xmlConfigPath, xslPath);
-            xmlUtils.saveToDB(xml, xsdPath);
-            System.out.println("Finish");
-            request.setAttribute("SUCCESS", "Crawl successfully");
+            CategoriesDAO catesDAO = new CategoriesDAO();
+            Categories cates = catesDAO.getAllCategories();
+            Map<String, Integer> totals = new HashMap<>();
+            for (int i = 0; i < cates.getCategory().size(); i++) {
+                String name = cates.getCategory().get(i).getCategoryName();
+                int total = cates.getCategory().get(i).getCount().intValue();
+                totals.put(name, total);
+            }
+            StreamResult rs = JAXBUtil.marshall(cates);
+            context.setAttribute("XML", rs.getOutputStream().toString());
+            context.setAttribute("TOTALS", totals);
         } catch (Exception e) {
-            request.setAttribute("ERROR", "Crawl failed");
-            log("CrawlServlet: " + e);
+            log("PublishServlet: " + e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -28,6 +28,10 @@
         <servlet-name>PDFServlet</servlet-name>
         <servlet-class>vuph.servlet.PDFServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PublishServlet</servlet-name>
+        <servlet-class>vuph.servlet.PublishServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>PDFServlet</servlet-name>
         <url-pattern>/PDFServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PublishServlet</servlet-name>
+        <url-pattern>/PublishServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

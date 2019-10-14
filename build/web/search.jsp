@@ -15,37 +15,32 @@
         <%@include file="header.jsp"%>
         <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
+    <body class="bgwhite">
         <div class="container-fluid primary">
             <c:if test="${sessionScope.USER.isIsAdmin()}">
                 <c:redirect url="admin.jsp"/>
-            </c:if>
-            <c:if var="login" test="${sessionScope.USER != null}">
-                <c:if var="didQuiz" test="${sessionScope.USER.getCateIdOfFavor() == null 
-                                            || sessionScope.USER.getCateIdOfFavor() == 0}">
-                    <c:redirect url="quiz.jsp"/>
-                </c:if>
             </c:if>
             <div class="container">
                 <div class="row">
                     <nav class="navbar navbar-expand-md navbar-light fullwidth d-flex justify-content-between">
                         <div class="col-lg-2 col-md-2">
-                            <a class="navbar-brand" href="">
+                            <a class="navbar-brand" href="index.jsp">
                                 <img src="img/logo.png" width="70" height="70" class="d-inline-block align-top" alt=""/>
                             </a>
                         </div>
                         <div class="col-lg-8 col-md-8 hidden-sm hidden-xs">
                             <div id="search" class="input-group">
-                                <input id="txtSearch" type="text" name="search" value="" placeholder="Từ khóa" id="input-search" class="input_search form-control">
+                                <input id="txtSearch" type="text" name="search" value="${param.txtSearch}" placeholder="Từ khóa" id="input-search" class="input_search form-control">
                                 <button onclick="onSearch()" type="button" class="btn_search">Tìm kiếm</button>
                             </div>
                         </div>
                         <div class="hidden-sm hidden-xs">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <c:if test="${didQuiz || not login}">
-                                    <form action="ProcessServlet" class="form-inline">
-                                        <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
-                                    </form>
+                                <c:if test="${sessionScope.USER.getCateIdOfFavor() == 0 
+                                              || sessionScope.USER.getCateIdOfFavor() == null}">
+                                      <form action="ProcessServlet" class="form-inline">
+                                          <input class="btn btn-primary mr-sm-2" name="action" type="submit" value="Làm Quiz">
+                                      </form>
                                 </c:if>
                                 <c:if var="isLogin" test="${empty sessionScope.USER}">
                                     <form action="ProcessServlet" class="form-inline">

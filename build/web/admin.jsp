@@ -39,6 +39,13 @@
                            onclick="onLoadPDF()"
                            class="btn btn-light btn-block"/>
                 </form>
+                <form action="ProcessServlet" class="form-control-lg btn-block">
+                    <input id="btnPublish"
+                           type="submit" name="action" 
+                           value="Publish"
+                           onclick="onLoadPublish()"
+                           class="btn btn-light btn-block"/>
+                </form>
                 <form action="ProcessServlet" class="form-control-lg">
                     <input id="btnLogout" type="submit" name="action" value="Log out" class="btn btn-danger btn-block"/>
                 </form>
@@ -53,6 +60,8 @@
             element.setAttribute("disabled", true);
             element = document.getElementById("btnPDF");
             element.setAttribute("disabled", true);
+            element = document.getElementById("btnPublish");
+            element.setAttribute("disabled", true);
             element = document.getElementById("spinner");
             element.classList.remove("noDisplay");
             window.location.href = '/XML_SE63200/CrawlServlet';
@@ -64,9 +73,24 @@
             element.setAttribute("disabled", true);
             element = document.getElementById("btnPDF");
             element.setAttribute("disabled", true);
+            element = document.getElementById("btnPublish");
+            element.setAttribute("disabled", true);
             element = document.getElementById("spinner");
             element.classList.remove("noDisplay");
             window.location.href = '/XML_SE63200/PDFServlet';
+        }
+        function onLoadPublish() {
+            let element = document.getElementById("btnCrawl");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("btnLogout");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("btnPDF");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("btnPublish");
+            element.setAttribute("disabled", true);
+            element = document.getElementById("spinner");
+            element.classList.remove("noDisplay");
+            window.location.href = '/XML_SE63200/PublishServlet';
         }
     </script>
 </html>

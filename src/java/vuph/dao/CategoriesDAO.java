@@ -59,6 +59,7 @@ public class CategoriesDAO implements Serializable {
             con = DBUtil.getConnection();
             sql = "  select ROW_NUMBER() over(order by categoryId) , count(categoryId)"
                     + "  from tblInstrument"
+                    + " where isDeleted = 0"
                     + "  group by tblInstrument.categoryId";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
